@@ -1,0 +1,12 @@
+/* Font family — uses NanumSquare if installed locally, otherwise falls back
+   to the platform's Korean system font. Mirrors the project ui-kit setup
+   (매장_상세_assets/css/tokens.css → --font-nanum). */
+
+:root {
+  --font-nanum: 'NanumSquare', -apple-system, BlinkMacSystemFont, system-ui,
+                'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+
+body, button, input, select, textarea {
+  font-family: var(--font-nanum);
+}

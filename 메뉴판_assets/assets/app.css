@@ -1,0 +1,98 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #1a1a1a;
+  font-family: NanumSquare, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* The phone-frame design size that all screens were exported at. */
+:root { --frame-w: 414px; --frame-h: 896px; --scale: 1; }
+
+.stage {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Frame fills full viewport width; height scales proportionally. */
+.frame {
+  position: relative;
+  width: 100vw;
+  height: calc(var(--frame-h) * var(--scale));
+  overflow: hidden;
+}
+
+.screen {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--frame-w);
+  height: var(--frame-h);
+  transform: scale(var(--scale));
+  transform-origin: top left;
+}
+.screen.active { display: block; }
+
+/* Disable any inner scroll containers from the Figma export so the page
+   has a single natural scroll instead of nested scroll regions. */
+.screen *::-webkit-scrollbar { display: none; }
+
+/* Hide the rating cluster in the top action bar across all screens. */
+.mp-summary-rating { display: none !important; }
+
+/* Floating cart bar — fixed at viewport bottom, scaled to match design width. */
+.cart-floating {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--frame-w) * var(--scale));
+  height: calc(80px * var(--scale));
+  z-index: 1000;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(255,255,255,0.95) 30%, rgba(255,255,255,0));
+}
+.cart-floating[hidden] { display: none; }
+.cart-floating-inner {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--frame-w);
+  pointer-events: auto;
+  transform: scale(var(--scale));
+  transform-origin: bottom left;
+}
+
+/* Dev navigation overlay (top-right) */
+.dev-nav {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(0,0,0,0.55);
+  padding: 6px;
+  border-radius: 8px;
+  font-family: -apple-system, sans-serif;
+  font-size: 11px;
+}
+.dev-nav button {
+  background: #2c2c2c;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+}
+.dev-nav button.active { background: #4a90e2; border-color: #4a90e2; }
+.dev-nav .label { color: #aaa; font-size: 10px; padding: 0 4px; }
+.dev-nav.collapsed > *:not(.toggle) { display: none; }
+.dev-nav .toggle { background: transparent; border: 0; color: #aaa; padding: 0 4px; cursor: pointer; align-self: flex-end; font-size: 14px; line-height: 1; }
