@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Passorder Wireframe · Preview</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #1a1d24;
+      --border: #2a2f3a;
+      --text: #e7e9ee;
+      --muted: #9aa3b2;
+      --accent: #ffd84d;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, system-ui,
+                   'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+    .wrap { width: 100%; max-width: 720px; }
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    .sub { color: var(--muted); margin: 0 0 28px; font-size: 14px; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    a.card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    a.card:hover {
+      border-color: var(--accent);
+      background: #20242d;
+      transform: translateY(-1px);
+    }
+    .title { font-weight: 600; font-size: 16px; }
+    .desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    .arrow { color: var(--accent); font-size: 18px; }
+    footer { margin-top: 32px; color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Passorder Wireframe Preview</h1>
+    <p class="sub">미리보기할 페이지를 선택하세요.</p>
+    <div class="grid">
+      <a class="card" href="/store/">
+        <div>
+          <div class="title">매장 상세</div>
+          <div class="desc">에슬로우커피 라운지점</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card" href="/menu/">
+        <div>
+          <div class="title">메뉴판</div>
+          <div class="desc">통합 프로토타입 · 카트 / 상세 / 모달</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card" href="/blog/">
+        <div>
+          <div class="title">블로그 콘텐츠 상세</div>
+          <div class="desc">성수동 노트북 작업 카페 12곳</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+    <footer>© Passorder · wireframe preview</footer>
+  </div>
+</body>
+</html>
