@@ -1,0 +1,205 @@
+/* =========================================================================
+   menu-overrides.css
+   Imported AFTER menu.css.
+   Replaces the Figma export's deeply-nested 414×896 phone-frame chain
+   (.stage > .frame > .screen > .dc-card > __el-* > __el-* > .mp-screen …)
+   with the same flat layout as the store detail (.sd-screen) and magazine
+   detail (.bd-screen) pages:
+     #root        height:100%, max-width:480px (set by store.css/magazine.css)
+       └ .mp-screen   flex column, height:100%, overflow:hidden, max 414px
+           ├ StatusBar
+           ├ MenuHeader
+           ├ CategoryTabs
+           └ .mp-scroll   flex:1, overflow-y:auto (the only scroll area)
+
+   Key principle: we cap .mp-screen at the original design width (414px) and
+   keep the Figma classes that ship per-element padding / typography / colors.
+   Overrides here only neutralize the absolute/sticky positioning and the
+   fixed-pixel container heights that were tied to the phone-frame chain —
+   we DO NOT force item widths or invent paddings, which would fight the
+   Figma rules and shift content.
+   ========================================================================= */
+
+/* Reset menu.css's dark global page chrome */
+html, body {
+  background: #fff !important;
+  overflow-x: hidden !important;
+}
+
+/* Defensive: in case stale .stage / .frame / .screen / .dc-card nodes remain
+   they should not impose a phone frame on the page anymore. */
+.stage, .frame, .screen, .dc-card {
+  all: unset;
+  display: block;
+}
+
+/* ====== Page root (mirrors .bd-screen / .sd-screen) ====== */
+.mp-screen {
+  height: 100% !important;
+  width: 100%;
+  max-width: 414px;
+  margin: 0 auto;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  position: relative !important;
+  transform: none !important;
+  block-size: auto !important;
+  inline-size: auto !important;
+}
+
+/* ====== Inner scroll (mirrors .bd-scroll / .sd-scroll) ====== */
+.mp-scroll {
+  flex: 1 1 auto !important;
+  width: 100%;
+  height: auto !important;
+  block-size: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  position: relative !important;
+  inline-size: auto !important;
+}
+.mp-scroll::-webkit-scrollbar { width: 0; display: none; }
+
+.mp-list {
+  width: 100%;
+  height: auto !important;
+  block-size: auto !important;
+  overflow: visible !important;
+  display: block;
+  padding-bottom: 96px; /* room for the floating cart bar */
+}
+
+/* StatusBar / MenuHeader / CategoryTabs — re-anchor as normal flex children
+   (Figma had them absolute or sticky-pinned to phone-frame coordinates).
+   We do NOT force their width so their Figma classes can keep the original
+   horizontal padding and 414px-design layout intact inside .mp-screen. */
+.role-status-bar-time,
+.role-status-bar-time > * {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+}
+.role-status-bar-time {
+  flex: none !important;
+  width: 100%;
+  height: auto !important;
+  block-size: auto !important;
+  background: #fff !important;
+}
+.mp-summary {
+  flex: none !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100%;
+  background: #fff !important;
+}
+.mp-catnav {
+  flex: none !important;
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  z-index: 5 !important;
+  width: 100%;
+  background: #fff !important;
+}
+.mp-catnav-track {
+  width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none;
+}
+.mp-catnav-track::-webkit-scrollbar { display: none; }
+
+/* Cart floating bar — anchored to viewport bottom, capped to design width */
+.cart-floating {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 414px;
+  height: 80px;
+  z-index: 900;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(255,255,255,0.95) 30%, rgba(255,255,255,0));
+}
+.cart-floating-inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Overlay backdrop — covers everything behind the sheet/modal */
+.mp-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  z-index: 1000 !important;
+  width: auto !important;
+  height: auto !important;
+  inset-block-end: auto !important;
+  inset-block-start: auto !important;
+  inset-inline-end: auto !important;
+  inset-inline-start: auto !important;
+  top: 0 !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+}
+
+/* Bottom sheet — anchored to viewport bottom regardless of where rendered */
+.mp-sheet {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 0 !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  max-width: 414px !important;
+  height: auto !important;
+  max-height: 92vh !important;
+  min-height: 0 !important;
+  background: #fff !important;
+  border-radius: 16px 16px 0 0 !important;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12) !important;
+  z-index: 1001 !important;
+  overflow-y: auto !important;
+  inset-block-end: 0 !important;
+  inset-block-start: auto !important;
+  inset-inline-end: auto !important;
+  inset-inline-start: 50% !important;
+}
+
+/* In-app modal — centered on viewport */
+.mp-modal {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: calc(100% - 32px) !important;
+  max-width: 380px !important;
+  height: auto !important;
+  max-height: 88vh !important;
+  background: #fff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
+  z-index: 1001 !important;
+  overflow-y: auto !important;
+  inset-block-end: auto !important;
+  inset-block-start: 50% !important;
+  inset-inline-end: auto !important;
+  inset-inline-start: 50% !important;
+}
+
+/* Hide the dev-nav if any leftover instance ever appears */
+.dev-nav { display: none !important; }
