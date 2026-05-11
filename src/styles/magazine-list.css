@@ -1,0 +1,232 @@
+/* =========================================================================
+   매거진 리스트(블로그 게시물 목록) 페이지 전용 스타일
+   tokens.css 위에 얹는 컴포넌트 레이어.
+   ========================================================================= */
+
+.ml-screen {
+  height: 100%;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  font-family: var(--font-default);
+  color: var(--fg-primary);
+}
+.ml-scroll {
+  flex: 1;
+  overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.ml-scroll::-webkit-scrollbar { width: 0; display: none; }
+
+/* ----- Status bar ----- */
+.ml-statusbar {
+  height: 44px; flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  font-size: 16px; font-weight: 700; color: #000;
+  background: #fff;
+}
+.ml-statusbar-icons { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ----- App bar ----- */
+.ml-appbar {
+  height: 52px; flex: none;
+  display: flex; align-items: center; gap: 4px;
+  padding: 0 12px;
+  background: #fff;
+}
+.ml-appbar-icon {
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; background: transparent; color: #333; cursor: pointer;
+  padding: 0;
+}
+.ml-appbar-brand {
+  flex: 1;
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-left: 4px;
+}
+.ml-appbar-logo {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--color-orange-500);
+  color: #fff; font-weight: 800; font-size: 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.ml-appbar-title {
+  font-size: 16px; font-weight: 800; color: #000;
+}
+.ml-appbar-title .accent { color: var(--color-orange-500); }
+
+/* ----- Hero copy ----- */
+.ml-hero {
+  padding: 20px 20px 8px;
+}
+.ml-hero-eyebrow {
+  display: block;
+  color: var(--color-orange-500);
+  font-size: 13px; font-weight: 800;
+  margin-bottom: 10px;
+}
+.ml-hero-title {
+  font-size: 28px; line-height: 38px;
+  font-weight: 800; color: #111;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px;
+}
+.ml-hero-desc {
+  color: var(--color-gray-700);
+  font-size: 14px; line-height: 22px;
+  margin: 0;
+}
+
+/* ----- Search ----- */
+.ml-search {
+  margin: 20px 20px 0;
+  height: 48px;
+  background: var(--color-gray-300);
+  border-radius: 14px;
+  display: flex; align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+  color: var(--color-gray-600);
+}
+.ml-search input {
+  flex: 1; border: none; background: transparent;
+  font-size: 14px; color: #333;
+  outline: none;
+  font-family: inherit;
+}
+.ml-search input::placeholder { color: var(--color-gray-600); }
+
+/* ----- Category chips ----- */
+.ml-chips {
+  display: flex;
+  gap: 8px;
+  padding: 20px 20px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ml-chips::-webkit-scrollbar { display: none; }
+.ml-chip {
+  flex: none;
+  height: 40px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--color-gray-450);
+  font-size: 14px; font-weight: 700; color: #333;
+  cursor: pointer;
+}
+.ml-chip .count {
+  color: var(--color-gray-600);
+  font-weight: 700;
+}
+.ml-chip.active {
+  background: #0F1A2A;
+  border-color: #0F1A2A;
+  color: #fff;
+}
+.ml-chip.active .count { color: rgba(255,255,255,0.55); }
+
+/* ----- Article cards ----- */
+.ml-list {
+  padding: 16px 20px 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.ml-card {
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--color-gray-400);
+  overflow: hidden;
+  cursor: pointer;
+}
+.ml-card.featured { grid-column: 1 / -1; }
+
+.ml-card-thumb {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  background: linear-gradient(135deg, #FFD9C4 0%, #FFE9DC 60%, #FFF1E8 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.ml-card-thumb.variant-mint  { background: linear-gradient(135deg, #C8F1EA 0%, #DFF7F2 100%); }
+.ml-card-thumb.variant-peach { background: linear-gradient(135deg, #FFD2C2 0%, #FFE6DA 100%); }
+.ml-card-thumb.variant-cream { background: linear-gradient(135deg, #FFE7C7 0%, #FFF3DF 100%); }
+.ml-card-thumb.variant-sky   { background: linear-gradient(135deg, #CCE3F6 0%, #E2EEF9 100%); }
+
+.ml-card-thumb-emoji {
+  font-size: 80px;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.08));
+}
+.ml-card-badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  height: 30px;
+  display: inline-flex; align-items: center;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: var(--color-orange-500);
+  color: #fff;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.ml-card-body { padding: 18px 18px 20px; }
+.ml-card-cat {
+  display: block;
+  color: var(--color-orange-500);
+  font-size: 13px; font-weight: 800;
+  margin-bottom: 8px;
+}
+.ml-card-title {
+  font-size: 18px; line-height: 26px;
+  font-weight: 800; color: #111;
+  margin: 0 0 10px;
+  letter-spacing: -0.2px;
+}
+.ml-card-desc {
+  color: var(--color-gray-700);
+  font-size: 14px; line-height: 22px;
+  margin: 0 0 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ml-card-meta {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--color-gray-700);
+  font-size: 12px;
+}
+.ml-card-meta .dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--color-gray-500);
+  display: inline-block;
+}
+.ml-card-meta .author { color: #333; font-weight: 700; }
+
+/* ----- Compact card grid (below featured) ----- */
+.ml-grid-2 {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ml-grid-2 .ml-card-thumb { aspect-ratio: 1 / 1; }
+.ml-grid-2 .ml-card-thumb-emoji { font-size: 56px; }
+.ml-grid-2 .ml-card-body { padding: 14px 14px 16px; }
+.ml-grid-2 .ml-card-title { font-size: 15px; line-height: 22px; }
+.ml-grid-2 .ml-card-desc { display: none; }
+
+/* ----- Home indicator ----- */
+.ml-home-indicator {
+  height: 34px; flex: none;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 8px;
+  background: #fff;
+}
+.ml-home-indicator span {
+  width: 134px; height: 5px; border-radius: 999px;
+  background: #000;
+}

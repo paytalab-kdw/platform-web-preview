@@ -4,6 +4,7 @@ const cards = [
   { to: '/store', title: '매장 상세', desc: '에슬로우커피 라운지점' },
   { to: '/menu', title: '메뉴판', desc: '통합 프로토타입 · 카트 / 상세 / 모달' },
   { to: '/magazine', title: '매거진 콘텐츠 상세', desc: '성수동 노트북 작업 카페 12곳' },
+  { to: '/magazine/list', title: '매거진 게시물 목록', desc: '히어로 카드 + 카테고리 칩 리스트' },
 ];
 
 export default function LandingPage() {
