@@ -16,7 +16,7 @@ export default function CartSheet({ lines, onUpdateQty, onRemove, onClose, onChe
   const distinct = lines.length;
 
   return (
-    <div aria-modal="true" className={`mp-sheet role-cart-sheet-panel ${P}__el-4ca29ba9`} role="dialog">
+    <div aria-modal="true" className="mp-sheet role-cart-sheet-panel" role="dialog">
       <div className={`mp-sheet-handle-row ${P}__el-97334ba8`}>
         <span className={`mp-sheet-handle ${P}__el-ef1e45ac`}></span>
       </div>

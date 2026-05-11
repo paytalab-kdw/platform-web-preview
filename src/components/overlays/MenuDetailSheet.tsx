@@ -29,7 +29,7 @@ export default function MenuDetailSheet({
     <div
       aria-labelledby="dlg-title"
       aria-modal="true"
-      className={`mp-sheet role-detail-sheet ${P}__el-765f63d3`}
+      className="mp-sheet role-detail-sheet"
       role="dialog"
     >
       <div className={`mp-sheet-handle-row ${P}__el-97334ba8`}>

@@ -87,11 +87,62 @@ const ARTICLES: Article[] = [
     emoji: '🍜',
     variant: 'sky',
   },
+  {
+    id: 'a6',
+    category: '패스오더 이용 팁',
+    title: '쿠폰 자동 적용, 한 번에 확인하는 법',
+    desc: '결제 직전에 적용 가능한 쿠폰이 자동으로 떠요. 놓치기 쉬운 설정 한 가지.',
+    author: '편집부',
+    date: '2025.11.11',
+    readTime: 3,
+    emoji: '🎫',
+    variant: 'mint',
+  },
+  {
+    id: 'a7',
+    category: '카페 비교/추천',
+    title: '비 오는 날 가기 좋은 도심 카페 8곳',
+    desc: '창가 자리, 따뜻한 라떼, 잔잔한 플레이리스트가 있는 곳.',
+    author: '이주연',
+    date: '2025.11.07',
+    readTime: 7,
+    emoji: '☔️',
+    variant: 'sky',
+  },
+  {
+    id: 'a8',
+    category: '맛집 추천',
+    title: '한남동 베이커리 BEST 5 — 평일 오전 추천',
+    desc: '갓 구운 빵을 줄 없이 받기 좋은 시간대까지 정리했어요.',
+    author: '김도현',
+    date: '2025.11.04',
+    readTime: 5,
+    emoji: '🥐',
+    variant: 'cream',
+  },
+  {
+    id: 'a9',
+    category: '이벤트',
+    title: '12월 패스오더 X 카페 라운드 시즌',
+    desc: '제휴 매장 한정, 한 잔 무료 쿠폰을 챙겨가세요.',
+    author: '편집부',
+    date: '2025.10.30',
+    readTime: 2,
+    emoji: '🎄',
+    variant: 'peach',
+  },
 ];
+
+type ViewMode = 'grid' | 'list';
+type SortOption = '최신순' | '인기순' | '읽는 시간 짧은 순';
+const SORT_OPTIONS: SortOption[] = ['최신순', '인기순', '읽는 시간 짧은 순'];
 
 export default function MagazineListPage() {
   const [activeCat, setActiveCat] = useState('all');
   const [query, setQuery] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [sort, setSort] = useState<SortOption>('최신순');
+  const [sortOpen, setSortOpen] = useState(false);
 
   const [featured, ...rest] = ARTICLES;
 
@@ -210,46 +261,127 @@ export default function MagazineListPage() {
               </div>
             </div>
           </article>
+        </div>
 
-          <div className="ml-grid-2">
-            {rest.slice(0, 2).map((a) => (
-              <article className="ml-card" key={a.id}>
-                <div className={`ml-card-thumb variant-${a.variant}`}>
-                  <span className="ml-card-thumb-emoji" aria-hidden>{a.emoji}</span>
-                </div>
-                <div className="ml-card-body">
-                  <span className="ml-card-cat">{a.category}</span>
-                  <h3 className="ml-card-title">{a.title}</h3>
-                  <div className="ml-card-meta">
-                    <span>{a.date}</span>
-                    <span className="dot" />
-                    <span>읽기 {a.readTime}분</span>
-                  </div>
-                </div>
-              </article>
-            ))}
+        <section className="ml-latest" aria-label="최신 글">
+          <header className="ml-latest-head">
+            <div className="ml-latest-head-left">
+              <h2 className="ml-latest-title">최신 글</h2>
+              <span className="ml-latest-count">{rest.length}개의 글</span>
+            </div>
+            <span className="ml-latest-cadence">매주 화·금 업데이트</span>
+          </header>
+
+          <div className="ml-latest-controls">
+            <div className="ml-sort">
+              <button
+                type="button"
+                className="ml-sort-btn"
+                aria-haspopup="listbox"
+                aria-expanded={sortOpen}
+                onClick={() => setSortOpen((v) => !v)}
+              >
+                <span>{sort}</span>
+                <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              {sortOpen && (
+                <ul className="ml-sort-menu" role="listbox">
+                  {SORT_OPTIONS.map((opt) => (
+                    <li key={opt} role="option" aria-selected={sort === opt}>
+                      <button
+                        type="button"
+                        className={`ml-sort-item${sort === opt ? ' active' : ''}`}
+                        onClick={() => {
+                          setSort(opt);
+                          setSortOpen(false);
+                        }}
+                      >
+                        {opt}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div className="ml-view-toggle" role="group" aria-label="보기 방식">
+              <button
+                type="button"
+                aria-label="그리드 보기"
+                aria-pressed={viewMode === 'grid'}
+                className={`ml-view-btn${viewMode === 'grid' ? ' active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
+                <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1.2" />
+                  <rect x="14" y="3" width="7" height="7" rx="1.2" />
+                  <rect x="3" y="14" width="7" height="7" rx="1.2" />
+                  <rect x="14" y="14" width="7" height="7" rx="1.2" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="리스트 보기"
+                aria-pressed={viewMode === 'list'}
+                className={`ml-view-btn${viewMode === 'list' ? ' active' : ''}`}
+                onClick={() => setViewMode('list')}
+              >
+                <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="6" x2="20" y2="6" />
+                  <line x1="4" y1="12" x2="20" y2="12" />
+                  <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          {rest.slice(2).map((a) => (
-            <article className="ml-card" key={a.id}>
-              <div className={`ml-card-thumb variant-${a.variant}`}>
-                <span className="ml-card-thumb-emoji" aria-hidden>{a.emoji}</span>
-              </div>
-              <div className="ml-card-body">
-                <span className="ml-card-cat">{a.category}</span>
-                <h3 className="ml-card-title">{a.title}</h3>
-                <p className="ml-card-desc">{a.desc}</p>
-                <div className="ml-card-meta">
-                  <span className="author">{a.author}</span>
-                  <span className="dot" />
-                  <span>{a.date}</span>
-                  <span className="dot" />
-                  <span>읽기 {a.readTime}분</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+          {viewMode === 'grid' ? (
+            <div className="ml-latest-grid">
+              {rest.map((a) => (
+                <article className="ml-card" key={a.id}>
+                  <div className={`ml-card-thumb variant-${a.variant}`}>
+                    <span className="ml-card-thumb-emoji" aria-hidden>{a.emoji}</span>
+                  </div>
+                  <div className="ml-card-body">
+                    <span className="ml-card-cat">{a.category}</span>
+                    <h3 className="ml-card-title">{a.title}</h3>
+                    <div className="ml-card-meta">
+                      <span>{a.date}</span>
+                      <span className="dot" />
+                      <span>읽기 {a.readTime}분</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <ul className="ml-latest-rows">
+              {rest.map((a) => (
+                <li key={a.id}>
+                  <article className="ml-row">
+                    <div className={`ml-row-thumb variant-${a.variant}`}>
+                      <span aria-hidden>{a.emoji}</span>
+                    </div>
+                    <div className="ml-row-body">
+                      <span className="ml-card-cat">{a.category}</span>
+                      <h3 className="ml-row-title">{a.title}</h3>
+                      <div className="ml-card-meta">
+                        <span className="author">{a.author}</span>
+                        <span className="dot" />
+                        <span>{a.date}</span>
+                        <span className="dot" />
+                        <span>읽기 {a.readTime}분</span>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
       </div>
 
       <div className="ml-home-indicator">

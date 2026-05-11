@@ -13,7 +13,7 @@ const P = 'inapp_modal';
 export default function InAppModal({ lines, onClose, onInstall }: Props) {
   const total = cartTotal(lines);
   return (
-    <div aria-modal="true" className={`mp-modal ${P}__el-90675fa2`} role="dialog">
+    <div aria-modal="true" className="mp-modal" role="dialog">
       <button aria-label="닫기" className={`mp-modal-close ${P}__el-61c8ebe2`} onClick={onClose}>
         <svg className={`${P}__el-f5bf2a0f`} fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
           <line className={`${P}__el-b076ee4d`} x1="18" x2="6" y1="6" y2="18" />

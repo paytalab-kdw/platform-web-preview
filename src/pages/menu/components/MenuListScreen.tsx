@@ -2,7 +2,6 @@ import { CATEGORIES } from '../data';
 import CategoryTabs from './CategoryTabs';
 import MenuHeader from './MenuHeader';
 import MenuItem from './MenuItem';
-import StatusBar from './StatusBar';
 
 type Props = {
   variant: 'menu-empty' | 'menu-with-cart';
@@ -25,16 +24,8 @@ export default function MenuListScreen({ variant, onOpenDetail }: Props) {
   const screenLabel =
     variant === 'menu-empty' ? '메뉴판 · empty' : '메뉴판 · cartbar';
 
-  // Flat layout matching .bd-screen (magazine) / .sd-screen (store):
-  //   .mp-screen  — flex column, height:100%, overflow:hidden, capped to 414px
-  //     ├ StatusBar
-  //     ├ MenuHeader
-  //     ├ CategoryTabs
-  //     └ .mp-scroll  — flex:1, overflow-y:auto
-  //         └ .mp-list  → sections (each carries its Figma __el class for spacing)
   return (
     <div className="mp-screen" data-screen={variant} data-screen-label={screenLabel}>
-      <StatusBar prefix={P} />
       <MenuHeader prefix={P} />
       <CategoryTabs prefix={P} />
       <div className="mp-scroll">

@@ -219,6 +219,144 @@
 .ml-grid-2 .ml-card-title { font-size: 15px; line-height: 22px; }
 .ml-grid-2 .ml-card-desc { display: none; }
 
+/* ----- Latest section ----- */
+.ml-latest {
+  padding: 8px 20px 32px;
+}
+.ml-latest-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.ml-latest-head-left {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.ml-latest-title {
+  margin: 0;
+  font-size: 22px; line-height: 30px;
+  font-weight: 800; color: #111;
+  letter-spacing: -0.3px;
+}
+.ml-latest-count {
+  font-size: 13px;
+  color: var(--color-gray-700);
+  font-weight: 700;
+}
+.ml-latest-cadence {
+  font-size: 12px;
+  color: var(--color-gray-700);
+  padding-top: 6px;
+}
+
+.ml-latest-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* sort dropdown */
+.ml-sort { position: relative; }
+.ml-sort-btn {
+  height: 36px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--color-gray-450);
+  font-size: 13px; font-weight: 700; color: #333;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ml-sort-menu {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  z-index: 5;
+  list-style: none; margin: 0; padding: 6px;
+  background: #fff;
+  border: 1px solid var(--color-gray-400);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  min-width: 160px;
+}
+.ml-sort-item {
+  width: 100%; text-align: left;
+  height: 34px;
+  padding: 0 10px;
+  border: none; background: transparent;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 600; color: #333;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ml-sort-item:hover { background: var(--color-gray-300); }
+.ml-sort-item.active { color: var(--color-orange-500); background: var(--color-orange-200); }
+
+/* view toggle */
+.ml-view-toggle {
+  display: inline-flex;
+  border-radius: 10px;
+  border: 1px solid var(--color-gray-450);
+  overflow: hidden;
+  background: #fff;
+}
+.ml-view-btn {
+  width: 40px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; background: #fff;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  padding: 0;
+}
+.ml-view-btn + .ml-view-btn { border-left: 1px solid var(--color-gray-450); }
+.ml-view-btn.active {
+  background: var(--color-orange-200);
+  color: var(--color-orange-500);
+}
+
+/* grid view */
+.ml-latest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.ml-latest-grid .ml-card-thumb { aspect-ratio: 1 / 1; }
+.ml-latest-grid .ml-card-thumb-emoji { font-size: 56px; }
+.ml-latest-grid .ml-card-body { padding: 14px; }
+.ml-latest-grid .ml-card-title { font-size: 15px; line-height: 22px; }
+
+/* list view */
+.ml-latest-rows {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column;
+}
+.ml-latest-rows li + li { border-top: 1px solid var(--color-gray-400); }
+.ml-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0;
+}
+.ml-row-thumb {
+  flex: none;
+  width: 96px; height: 96px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+  overflow: hidden;
+}
+.ml-row-thumb.variant-mint  { background: linear-gradient(135deg, #C8F1EA 0%, #DFF7F2 100%); }
+.ml-row-thumb.variant-peach { background: linear-gradient(135deg, #FFD2C2 0%, #FFE6DA 100%); }
+.ml-row-thumb.variant-cream { background: linear-gradient(135deg, #FFE7C7 0%, #FFF3DF 100%); }
+.ml-row-thumb.variant-sky   { background: linear-gradient(135deg, #CCE3F6 0%, #E2EEF9 100%); }
+.ml-row-body {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.ml-row-title {
+  margin: 0;
+  font-size: 15px; line-height: 22px;
+  font-weight: 800; color: #111;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ----- Home indicator ----- */
 .ml-home-indicator {
   height: 34px; flex: none;
