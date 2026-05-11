@@ -5,6 +5,7 @@ const cards = [
   { to: '/menu', title: '메뉴판', desc: '통합 프로토타입 · 카트 / 상세 / 모달' },
   { to: '/magazine', title: '매거진 콘텐츠 상세', desc: '성수동 노트북 작업 카페 12곳' },
   { to: '/magazine/list', title: '매거진 게시물 목록', desc: '히어로 카드 + 카테고리 칩 리스트' },
+  { to: '/blog', title: '블로그 관리 (백오피스)', desc: 'Paytalab Admin · 게시물 상태 관리 / 등록 / 미리보기' },
 ];
 
 export default function LandingPage() {
