@@ -895,3 +895,256 @@ body {
   border-radius: 8px;
   font-size: 11.5px; color: #8A4A20; line-height: 1.5;
 }
+
+/* =========================================================================
+   MDX 커스텀 컴포넌트 쇼케이스 페이지
+   ========================================================================= */
+.bd-mdx-intro {
+  padding: 20px 16px 8px;
+  border-bottom: 1px solid #F4F4F4;
+}
+.bd-mdx-intro .bd-cat-chip { margin-bottom: 10px; }
+.bd-mdx-intro .bd-title {
+  font-size: 22px; line-height: 30px;
+  margin: 0 0 8px;
+  letter-spacing: -.3px;
+}
+.bd-mdx-intro .bd-lead {
+  font-size: 13px; line-height: 20px; color: #5E6168;
+  margin: 0 0 12px;
+}
+
+.bd-mdx-section {
+  padding: 20px 16px 6px;
+  border-bottom: 1px solid #F4F4F4;
+}
+.bd-mdx-section:last-of-type { border-bottom: 0; }
+
+.bd-mdx-section-head {
+  display: flex; gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.bd-mdx-section-num {
+  flex: none;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: #FFF2ED; color: #D84F1E;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800;
+  font-feature-settings: "tnum";
+}
+.bd-mdx-section-meta { flex: 1; min-width: 0; }
+.bd-mdx-section-title {
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+  font-size: 16px; font-weight: 800; color: #2A2A2A;
+  margin: 0 0 4px;
+  letter-spacing: -.2px;
+}
+.bd-mdx-section-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #F4F4F4;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
+  font-size: 11px; font-weight: 700;
+  color: #5E6168;
+}
+.bd-mdx-section-desc {
+  font-size: 12.5px; line-height: 19px; color: #7D7D7D;
+  margin: 0;
+}
+.bd-mdx-section-body {
+  /* 카드 컴포넌트들이 기본 margin 을 갖고 있으므로 추가 패딩은 최소화 */
+}
+
+.bd-mdx-list-title {
+  font-size: 14px; font-weight: 800; color: #333;
+  margin: 0 0 8px;
+  letter-spacing: -.2px;
+}
+
+/* -------------------------------------------------------------------------
+   메뉴 컴포넌트 — 메뉴판 페이지(.mp-acc-item)와 동일한 레이아웃
+   ------------------------------------------------------------------------- */
+.bd-mdx-menu {
+  display: flex; gap: 12px;
+  padding: 16px;
+  align-items: flex-start;
+  background: #fff;
+}
+.bd-mdx-menu-body {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  align-items: flex-start;
+}
+.bd-mdx-menu-name {
+  font-size: 17px; line-height: 22px; font-weight: 800; color: #333;
+  letter-spacing: -.2px;
+  margin: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  max-width: 100%;
+}
+.bd-mdx-menu-desc {
+  font-size: 13px; line-height: 19px; color: #5E6168;
+  margin: 0;
+  width: 100%;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bd-mdx-menu-prices {
+  display: flex; align-items: baseline; gap: 6px;
+  margin-top: 2px;
+}
+.bd-mdx-menu-price {
+  font-size: 16px; line-height: 16px; font-weight: 800; color: #333;
+}
+.bd-mdx-menu-price-old {
+  font-size: 12px; line-height: 12px;
+  color: #5E6168;
+  text-decoration: line-through;
+}
+.bd-mdx-menu-thumb {
+  position: relative;
+  width: 80px; height: 80px;
+  border-radius: 8px;
+  border: 1px solid #EDEDED;
+  flex: none;
+  overflow: hidden;
+  background-color: #1F1108;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bd-mdx-menu-thumb-tag {
+  position: absolute; bottom: 4px; right: 4px;
+  background: #FF7949; color: #fff;
+  font-size: 10px; font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* 단일 카드 형태 — 카드 테두리 + 라운드 */
+.bd-mdx-menu-card {
+  margin: 12px 0 18px;
+  border: 1px solid #EDEDED;
+  border-radius: 12px;
+}
+
+/* 목록 안에서 사용될 때 — 연결형 (위/아래 라인으로 이어짐) */
+.bd-mdx-menu-list { margin: 12px 0 18px; }
+.bd-mdx-menu-list-body {
+  border-top: 1px solid #EDEDED;
+  border-bottom: 1px solid #EDEDED;
+  background: #fff;
+}
+.bd-mdx-menu-list-body .bd-mdx-menu-row + .bd-mdx-menu-row {
+  border-top: 1px solid #F4F4F4;
+}
+
+/* -------------------------------------------------------------------------
+   매장 컴포넌트 — CTA 제거 버전
+   ------------------------------------------------------------------------- */
+.bd-mdx-store {
+  padding: 14px;
+  background: #fff;
+}
+.bd-mdx-store-top {
+  display: flex; gap: 14px;
+  align-items: stretch;
+}
+.bd-mdx-store-thumb {
+  width: 96px;
+  align-self: stretch;
+  min-height: 96px;
+  flex: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#FFE4DB,#FFCBB8);
+}
+.bd-mdx-store-info {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.bd-mdx-store-tag {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 20px; padding: 0 6px;
+  border-radius: 4px;
+  background: #FFF2ED; color: #D84F1E;
+  font-size: 11px; font-weight: 800;
+}
+.bd-mdx-store-name {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: transparent; border: 0; padding: 0;
+  font-family: inherit;
+  font-size: 16px; font-weight: 800; color: #333;
+  text-align: left;
+  cursor: pointer;
+}
+.bd-mdx-store-name svg { color: #AAA; flex: none; }
+.bd-mdx-store-name:hover { color: #FF7949; }
+.bd-mdx-store-name:hover svg { color: #FF7949; }
+.bd-mdx-store-addr {
+  font-size: 12px; color: #7D7D7D;
+}
+.bd-mdx-store-stats {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; color: #7D7D7D; font-weight: 600;
+  margin-top: 2px;
+}
+.bd-mdx-store-stats b { color: #333; font-weight: 800; }
+.bd-mdx-store-stats .dot {
+  width: 3px; height: 3px; border-radius: 999px; background: #D2D2D2;
+}
+.bd-mdx-store-desc {
+  font-size: 13px; line-height: 20px; color: #5E6168;
+  margin: 12px 0 0;
+  background: #F7F7F7;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* 단일 카드 형태 */
+.bd-mdx-store-card {
+  margin: 12px 0 18px;
+  border: 1px solid #E2E2E2;
+  border-radius: 14px;
+}
+
+/* 목록 안에서 사용될 때 — 연결형 */
+.bd-mdx-store-list { margin: 12px 0 18px; }
+.bd-mdx-store-list-body {
+  border-top: 1px solid #E2E2E2;
+  border-bottom: 1px solid #E2E2E2;
+  background: #fff;
+}
+.bd-mdx-store-list-body .bd-mdx-store-row + .bd-mdx-store-row {
+  border-top: 1px solid #F4F4F4;
+}
+
+/* -------------------------------------------------------------------------
+   AppLinkButton — 앱으로 3초만에 주문하기 (단일 버튼)
+   ------------------------------------------------------------------------- */
+.bd-mdx-applink {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 52px;
+  margin: 16px 0;
+  padding: 0 18px;
+  background: #FF7949;
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px; font-weight: 800;
+  letter-spacing: -.2px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -4px rgba(255,121,73,.4), 0 2px 6px -2px rgba(16,24,40,.1);
+  transition: background .15s, transform .1s;
+}
+.bd-mdx-applink:hover { background: #E86232; }
+.bd-mdx-applink:active { transform: translateY(1px); background: #BD3B0C; }

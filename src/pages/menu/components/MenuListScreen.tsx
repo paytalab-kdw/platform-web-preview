@@ -1,5 +1,7 @@
+import { Fragment } from 'react';
 import { CATEGORIES } from '../data';
 import CategoryTabs from './CategoryTabs';
+import EventPromoSection from './EventPromoSection';
 import MenuHeader from './MenuHeader';
 import MenuItem from './MenuItem';
 
@@ -11,15 +13,18 @@ export default function MenuListScreen() {
       <div className="mp-scroll">
         <div className="mp-list">
           {CATEGORIES.map((cat) => (
-            <section key={cat.id} className="mp-cat-section" id={cat.id}>
-              <h2 className="mp-cat-head">
-                {cat.label}
-                <span className="count">{cat.count}</span>
-              </h2>
-              {cat.items.map((m) => (
-                <MenuItem key={m.name} menu={m} />
-              ))}
-            </section>
+            <Fragment key={cat.id}>
+              <section className="mp-cat-section" id={cat.id}>
+                <h2 className="mp-cat-head">
+                  {cat.label}
+                  <span className="count">{cat.count}</span>
+                </h2>
+                {cat.items.map((m) => (
+                  <MenuItem key={m.name} menu={m} />
+                ))}
+              </section>
+              {cat.id === 'cat-event' && <EventPromoSection />}
+            </Fragment>
           ))}
         </div>
       </div>

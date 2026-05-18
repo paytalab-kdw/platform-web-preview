@@ -5,6 +5,7 @@ import MenuPage from './pages/menu/MenuPage';
 import MagazinePage from './pages/magazine/MagazinePage';
 import MagazineListPage from './pages/magazine/MagazineListPage';
 import MagazinePreviewPage from './pages/magazine/MagazinePreviewPage';
+import MagazineComponentsPage from './pages/magazine/MagazineComponentsPage';
 import BlogManagementPage from './pages/blog/BlogManagementPage';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/magazine" element={<MagazinePage />} />
         <Route path="/magazine/list" element={<MagazineListPage />} />
         <Route path="/magazine/preview" element={<MagazinePreviewPage />} />
+        <Route path="/magazine/components" element={<MagazineComponentsPage />} />
         <Route path="/blog" element={<BlogManagementPage />} />
       </Routes>
     </BrowserRouter>
