@@ -3,49 +3,38 @@ import CategoryTabs from './CategoryTabs';
 import MenuHeader from './MenuHeader';
 import MenuItem from './MenuItem';
 
-type Props = {
-  variant: 'menu-empty' | 'menu-with-cart';
-  onOpenDetail: (name: string) => void;
-};
-
-const PREFIX_BY_VARIANT: Record<Props['variant'], string> = {
-  'menu-empty': 'menu_empty',
-  'menu-with-cart': 'menu_with_cart',
-};
-
-// Per-section class hashes from the original Figma export — they provide the
-// section padding, head margins, and divider colors. Re-applying them keeps
-// the menu's spacing consistent with the original design without us having
-// to re-author CSS for every detail.
-const SECTION_CLASSES = ['8dcc62d0', 'c3e536e2', 'ad1c1bfb', 'eeeae81e', 'eeeae81e'];
-
-export default function MenuListScreen({ variant, onOpenDetail }: Props) {
-  const P = PREFIX_BY_VARIANT[variant];
-  const screenLabel =
-    variant === 'menu-empty' ? '메뉴판 · empty' : '메뉴판 · cartbar';
-
+export default function MenuListScreen() {
   return (
-    <div className="mp-screen" data-screen={variant} data-screen-label={screenLabel}>
-      <MenuHeader prefix={P} />
-      <CategoryTabs prefix={P} />
+    <div className="mp-screen" data-screen-label="메뉴판">
+      <MenuHeader />
+      <CategoryTabs />
       <div className="mp-scroll">
         <div className="mp-list">
-          {CATEGORIES.map((cat, i) => (
-            <section
-              key={cat.id}
-              className={`mp-cat-section ${P}__el-${SECTION_CLASSES[i]}`}
-              id={cat.id}
-            >
-              <h2 className={`mp-cat-head ${P}__el-922473a9`}>
+          {CATEGORIES.map((cat) => (
+            <section key={cat.id} className="mp-cat-section" id={cat.id}>
+              <h2 className="mp-cat-head">
                 {cat.label}
-                <span className={`count ${P}__el-1fb7fc3b`}>{cat.count}</span>
+                <span className="count">{cat.count}</span>
               </h2>
               {cat.items.map((m) => (
-                <MenuItem key={m.name} menu={m} prefix={P} onClick={onOpenDetail} />
+                <MenuItem key={m.name} menu={m} />
               ))}
             </section>
           ))}
         </div>
+      </div>
+      <div className="mp-acc-cta-wrap">
+        <button
+          className="mp-acc-cta"
+          onClick={() => alert('앱 설치 페이지로 이동 (프로토타입)')}
+        >
+          <span>앱에서 주문하기</span>
+          <span className="arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </span>
+        </button>
       </div>
     </div>
   );
