@@ -1,16 +1,142 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import '../../styles/magazine.css';
 import { fmt } from './data';
 
 /* =========================================================================
-   매거진 본문에서 MDX 커스텀 컴포넌트로 사용 가능한 5종 모음
-   1) MenuCard       — 메뉴 컴포넌트
-   2) MenuList       — 메뉴 목록 컴포넌트 (MenuCard 연결형)
-   3) StoreCard      — 매장 컴포넌트
-   4) StoreList      — 매장 목록 컴포넌트 (StoreCard 연결형)
-   5) AppLinkButton  — 앱으로 3초만에 주문하기 버튼
+   매거진/블로그 본문에서 MDX 커스텀 컴포넌트로 사용 가능한 컴포넌트 모음
+   ─ 공통 컴포넌트 ─
+   1) ArticleCard   — 블로그 글 컴포넌트
+   2) ArticleList   — 블로그 글 목록 컴포넌트 (연결형)
+   3) LinkButton    — 링크 컴포넌트
+   4) FaqAccordion  — FAQ 아코디언 컴포넌트
+   ─ B2C 플랫폼 웹 전용 컴포넌트 ─
+   5) MenuCard      — 메뉴 컴포넌트
+   6) MenuList      — 메뉴 목록 컴포넌트 (연결형)
+   7) StoreCard     — 매장 컴포넌트
+   8) StoreList     — 매장 목록 컴포넌트 (연결형)
    ========================================================================= */
 
+/* -------------------------------------------------------------------------
+   공통 — 1. 블로그 글
+   ------------------------------------------------------------------------- */
+interface ArticleCardProps {
+  category: string;
+  title: string;
+  date?: string;
+  emoji?: string;
+  thumbBg?: string;
+  variant?: 'card' | 'row';
+}
+
+function ArticleCard({
+  category,
+  title,
+  date,
+  emoji,
+  thumbBg,
+  variant = 'card',
+}: ArticleCardProps) {
+  return (
+    <article className={`bd-mdx-article bd-mdx-article-${variant}`}>
+      <div className="bd-mdx-article-thumb" style={{ background: thumbBg || '#FFF2ED' }}>
+        {emoji && <span>{emoji}</span>}
+      </div>
+      <div className="bd-mdx-article-body">
+        <span className="bd-mdx-article-badge">{category}</span>
+        <span className="bd-mdx-article-title">{title}</span>
+        {date && <span className="bd-mdx-article-meta">{date}</span>}
+      </div>
+      <svg className="bd-mdx-article-chev" width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#AAA" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </article>
+  );
+}
+
+/* -------------------------------------------------------------------------
+   공통 — 2. 블로그 글 목록
+   ------------------------------------------------------------------------- */
+interface ArticleListProps {
+  title?: string;
+  items: Omit<ArticleCardProps, 'variant'>[];
+}
+
+function ArticleList({ title, items }: ArticleListProps) {
+  return (
+    <section className="bd-mdx-article-list">
+      {title && <h4 className="bd-mdx-list-title">{title}</h4>}
+      <div className="bd-mdx-article-list-body">
+        {items.map((it, i) => (
+          <ArticleCard key={i} {...it} variant="row" />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------
+   공통 — 3. 링크 버튼
+   ------------------------------------------------------------------------- */
+interface LinkButtonProps {
+  label: string;
+  href?: string;
+}
+
+function LinkButton({ label, href = '#' }: LinkButtonProps) {
+  return (
+    <a className="bd-mdx-linkbtn" href={href}>
+      <span>{label}</span>
+      <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </a>
+  );
+}
+
+/* -------------------------------------------------------------------------
+   공통 — 4. FAQ 아코디언
+   ------------------------------------------------------------------------- */
+interface FaqItem { q: string; a: string }
+interface FaqAccordionProps { items: FaqItem[] }
+
+function FaqAccordion({ items }: FaqAccordionProps) {
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  return (
+    <section className="bd-mdx-faq">
+      {items.map((it, i) => {
+        const on = i === openIdx;
+        return (
+          <div key={i} className={`bd-mdx-faq-item${on ? ' open' : ''}`}>
+            <button
+              type="button"
+              className="bd-mdx-faq-q"
+              aria-expanded={on}
+              onClick={() => setOpenIdx(on ? null : i)}
+            >
+              <span className="bd-mdx-faq-q-prefix">Q.</span>
+              <span className="bd-mdx-faq-q-text">{it.q}</span>
+              <span className="bd-mdx-faq-q-chev">
+                <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </span>
+            </button>
+            <div className="bd-mdx-faq-a" aria-hidden={!on}>
+              <div className="bd-mdx-faq-a-inner">
+                <span className="bd-mdx-faq-a-prefix">A.</span>
+                <p className="bd-mdx-faq-a-text">{it.a}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------
+   B2C — 5. 메뉴
+   ------------------------------------------------------------------------- */
 interface MenuCardProps {
   name: string;
   desc: string;
@@ -18,7 +144,6 @@ interface MenuCardProps {
   oldPrice?: number;
   image?: string;
   badge?: string;
-  /** 내부용 — MenuList 안에서는 연결형으로 렌더링 */
   variant?: 'card' | 'row';
 }
 
@@ -48,6 +173,9 @@ function MenuCard({ name, desc, price, oldPrice, image, badge, variant = 'card' 
   );
 }
 
+/* -------------------------------------------------------------------------
+   B2C — 6. 메뉴 목록
+   ------------------------------------------------------------------------- */
 interface MenuListProps {
   title?: string;
   items: Omit<MenuCardProps, 'variant'>[];
@@ -66,6 +194,9 @@ function MenuList({ title, items }: MenuListProps) {
   );
 }
 
+/* -------------------------------------------------------------------------
+   B2C — 7. 매장
+   ------------------------------------------------------------------------- */
 interface StoreCardProps {
   tag?: string;
   name: string;
@@ -74,7 +205,6 @@ interface StoreCardProps {
   addr: string;
   desc: string;
   bg?: string;
-  /** 내부용 — StoreList 안에서는 연결형으로 렌더링 */
   variant?: 'card' | 'row';
 }
 
@@ -120,6 +250,9 @@ function StoreCard({
   );
 }
 
+/* -------------------------------------------------------------------------
+   B2C — 8. 매장 목록
+   ------------------------------------------------------------------------- */
 interface StoreListProps {
   title?: string;
   items: Omit<StoreCardProps, 'variant'>[];
@@ -138,24 +271,38 @@ function StoreList({ title, items }: StoreListProps) {
   );
 }
 
-interface AppLinkButtonProps {
-  label?: string;
-}
-
-function AppLinkButton({ label = '앱으로 3초만에 주문하기' }: AppLinkButtonProps) {
-  return (
-    <button type="button" className="bd-mdx-applink">
-      <span>{label}</span>
-      <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="9 18 15 12 9 6" />
-      </svg>
-    </button>
-  );
-}
-
 /* =========================================================================
    샘플 데이터
    ========================================================================= */
+
+const SAMPLE_ARTICLE: ArticleCardProps = {
+  category: '연남동',
+  title: '연남동 디지털 노마드 카페 10선 — 와이파이 빠른 곳만',
+  date: '2025.11.20',
+  emoji: '💻',
+  thumbBg: '#E5EAEF',
+};
+
+const SAMPLE_ARTICLE_LIST: Omit<ArticleCardProps, 'variant'>[] = [
+  { category: '연남동', emoji: '💻', thumbBg: '#E5EAEF', title: '연남동 디지털 노마드 카페 10선 — 와이파이 빠른 곳만', date: '2025.11.20' },
+  { category: '을지로', emoji: '🍃', thumbBg: '#E8F5E9', title: '을지로 노포 옆 작업 카페 — 한적함이 무기인 8곳', date: '2025.11.14' },
+  { category: '성수동', emoji: '🍰', thumbBg: '#FFF2ED', title: '성수동에서 진짜 맛있는 디저트 카페 9곳', date: '2025.10.30' },
+];
+
+const SAMPLE_FAQ: FaqItem[] = [
+  {
+    q: '패스오더 앱은 어떻게 설치하나요?',
+    a: '앱스토어 또는 플레이스토어에서 "패스오더"로 검색해 설치할 수 있습니다. 매거진 본문의 인앱 진입 버튼을 누르면 자동으로 스토어로 이동합니다.',
+  },
+  {
+    q: '주문할 때 결제는 어떻게 진행되나요?',
+    a: '신용/체크카드, 카카오페이, 네이버페이, 토스페이 등 주요 간편결제 수단을 모두 지원합니다. 매장별 사용 가능 결제 수단은 매장 상세 페이지에서 확인할 수 있어요.',
+  },
+  {
+    q: '주문 후 픽업 시간은 어떻게 안내되나요?',
+    a: '결제 완료 직후 예상 픽업 시간이 안내되며, 매장에서 메뉴 준비가 끝나면 푸시 알림을 보내드립니다. 보통 평균 4–7분 내에 픽업할 수 있어요.',
+  },
+];
 
 const SAMPLE_MENU: MenuCardProps = {
   name: '에스프레소 토닉',
@@ -252,6 +399,16 @@ function ComponentSection({ index, name, tagName, desc, children }: SectionProps
   );
 }
 
+function GroupHead({ label, title, desc }: { label: string; title: string; desc: string }) {
+  return (
+    <header className="bd-mdx-group">
+      <span className="bd-mdx-group-eyebrow">{label}</span>
+      <h2 className="bd-mdx-group-title">{title}</h2>
+      <p className="bd-mdx-group-desc">{desc}</p>
+    </header>
+  );
+}
+
 export default function MagazineComponentsPage() {
   return (
     <div className="bd-screen" data-screen-label="매거진 MDX 커스텀 컴포넌트">
@@ -295,34 +452,82 @@ export default function MagazineComponentsPage() {
       <div className="bd-scroll">
         <header className="bd-mdx-intro">
           <span className="bd-cat-chip">MDX 컴포넌트</span>
-          <h1 className="bd-title">매거진 본문에서 쓸 수 있는 5가지 컴포넌트</h1>
+          <h1 className="bd-title">매거진 본문에서 쓸 수 있는 커스텀 컴포넌트</h1>
           <p className="bd-lead">
             블로그/매거진 본문 MDX에서 바로 호출해 쓸 수 있는 커스텀 컴포넌트 모음.
-            본문 흐름과 자연스럽게 어울리도록 디자인되어 있어요.
+            발행 사이트와 무관한 <b>공통 컴포넌트</b>와 <b>B2C 플랫폼 웹 전용 컴포넌트</b>로 나뉘어요.
           </p>
         </header>
 
         <article className="bd-body">
+          <GroupHead
+            label="1.3.1"
+            title="공통 컴포넌트"
+            desc="발행 사이트와 무관하게 두 트랙 모두에서 사용 가능합니다."
+          />
+
           <ComponentSection
             index={1}
+            name="블로그 글 컴포넌트"
+            tagName="<ArticleCard />"
+            desc="단일 블로그/매거진 글을 본문에 카드 형태로 삽입합니다. 카테고리·제목·메타·썸네일이 함께 노출돼요."
+          >
+            <ArticleCard {...SAMPLE_ARTICLE} />
+          </ComponentSection>
+
+          <ComponentSection
+            index={2}
+            name="블로그 글 목록 컴포넌트"
+            tagName="<ArticleList />"
+            desc="여러 블로그 글을 묶음으로 노출합니다. 항목 사이 간격 없이 라인으로 연결됩니다."
+          >
+            <ArticleList title="이 글과 함께 읽기 좋은 글" items={SAMPLE_ARTICLE_LIST} />
+          </ComponentSection>
+
+          <ComponentSection
+            index={3}
+            name="링크 컴포넌트"
+            tagName="<LinkButton />"
+            desc="버튼 라벨과 이동 링크를 받아 풀폭 오렌지 CTA 버튼으로 노출합니다. 본문 중간/하단 어디든 삽입 가능."
+          >
+            <LinkButton label="앱으로 3초만에 주문하기" href="#" />
+          </ComponentSection>
+
+          <ComponentSection
+            index={4}
+            name="FAQ 아코디언"
+            tagName="<FaqAccordion />"
+            desc="질문 / 답변 페어 리스트를 받아 아코디언 형태로 노출합니다. 헤더 영역은 항상 HTML로 노출되어 SEO 본문 원칙을 따라요."
+          >
+            <FaqAccordion items={SAMPLE_FAQ} />
+          </ComponentSection>
+
+          <GroupHead
+            label="1.3.2"
+            title="B2C 플랫폼 웹 전용 컴포넌트"
+            desc="app.passorder.co.kr/article/{slug} 발행 시에만 활성화됩니다. 카드 내부 CTA는 제거되어 있고, 앱 진입 동선은 공통의 LinkButton으로 통합됩니다."
+          />
+
+          <ComponentSection
+            index={5}
             name="메뉴 컴포넌트"
             tagName="<MenuCard />"
-            desc="단일 메뉴를 카드 형태로 본문에 삽입합니다. 메뉴판 페이지와 동일한 레이아웃 (이름·설명·가격 + 썸네일)."
+            desc="단일 메뉴를 카드 형태로 본문에 삽입합니다. 매장 메뉴판 페이지(2.2.2)의 메뉴 아이템과 동일 레이아웃."
           >
             <MenuCard {...SAMPLE_MENU} />
           </ComponentSection>
 
           <ComponentSection
-            index={2}
+            index={6}
             name="메뉴 목록 컴포넌트"
             tagName="<MenuList />"
-            desc="여러 메뉴를 한 묶음으로 노출합니다. 카드 사이에 간격 없이 라인으로 이어집니다."
+            desc="여러 메뉴를 한 묶음으로 노출합니다. 카드 사이 간격 없이 라인으로 이어집니다."
           >
             <MenuList title="에디터가 고른 시그니처 음료 3선" items={SAMPLE_MENU_LIST} />
           </ComponentSection>
 
           <ComponentSection
-            index={3}
+            index={7}
             name="매장 컴포넌트"
             tagName="<StoreCard />"
             desc="단일 매장을 카드 형태로 본문에 삽입합니다. 매장 정보·통계·설명이 함께 노출돼요."
@@ -331,21 +536,12 @@ export default function MagazineComponentsPage() {
           </ComponentSection>
 
           <ComponentSection
-            index={4}
+            index={8}
             name="매장 목록 컴포넌트"
             tagName="<StoreList />"
-            desc="여러 매장을 한 묶음으로 노출합니다. 매장 사이에 간격 없이 라인으로 이어집니다."
+            desc="여러 매장을 한 묶음으로 노출합니다. 매장 사이 간격 없이 라인으로 이어집니다."
           >
             <StoreList title="성수동 작업 카페 TOP 3" items={SAMPLE_STORE_LIST} />
-          </ComponentSection>
-
-          <ComponentSection
-            index={5}
-            name="버튼 컴포넌트"
-            tagName="<AppLinkButton />"
-            desc="패스오더 앱으로 진입하는 단일 CTA 버튼. 본문 중간/하단 어디든 삽입 가능."
-          >
-            <AppLinkButton />
           </ComponentSection>
         </article>
 

@@ -150,8 +150,6 @@ export default function MagazinePage({ preview = false }: MagazinePageProps) {
   const fillRef = useRef<HTMLDivElement | null>(null);
   const [tocOpen, setTocOpen] = useState(true);
   const [activeTocIdx, setActiveTocIdx] = useState(0);
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(ARTICLE.likes);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
   const toggleCheck = (key: string) =>
@@ -185,14 +183,6 @@ export default function MagazinePage({ preview = false }: MagazinePageProps) {
     const target = document.getElementById(id);
     if (!scroller || !target) return;
     scroller.scrollTo({ top: target.offsetTop - 64, behavior: 'smooth' });
-  };
-
-  const toggleLike = () => {
-    setLiked((prev) => {
-      const next = !prev;
-      setLikeCount((c) => c + (next ? 1 : -1));
-      return next;
-    });
   };
 
   return (
@@ -497,12 +487,6 @@ export default function MagazinePage({ preview = false }: MagazinePageProps) {
         </div>
 
         <div className="bd-engage">
-          <button className={`bd-engage-btn${liked ? ' liked' : ''}`} onClick={toggleLike}>
-            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-            좋아요 <b>{likeCount}</b>
-          </button>
           <button className="bd-engage-btn" aria-label="공유하기">
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <circle cx={18} cy={5} r={3} />
@@ -514,15 +498,6 @@ export default function MagazinePage({ preview = false }: MagazinePageProps) {
             공유하기
           </button>
         </div>
-
-        <aside className="bd-author-card">
-          <div className="bd-author-card-avatar">{ARTICLE.author[0]}</div>
-          <div className="bd-author-card-body">
-            <div className="bd-author-card-name">{ARTICLE.author}</div>
-            <div className="bd-author-card-role">{ARTICLE.authorRole}</div>
-            <div className="bd-author-card-bio">{ARTICLE.authorBio}</div>
-          </div>
-        </aside>
 
         <div className="bd-block-divider" />
 

@@ -16,7 +16,6 @@ interface Article {
   desc: string;
   author: string;
   date: string;
-  readTime: number;
   badge?: string;
   emoji: string;
   variant: 'peach' | 'mint' | 'cream' | 'sky';
@@ -38,7 +37,6 @@ const ARTICLES: Article[] = [
     desc: '주말마다 노트북 들고 카페 투어를 다닌 에디터가 직접 가본 12곳을 콘센트 자리·와이파이 속도까지 정리했어요.',
     author: '이주연',
     date: '2025.11.28',
-    readTime: 8,
     badge: '에디터 PICK',
     emoji: '☕️',
     variant: 'peach',
@@ -50,7 +48,6 @@ const ARTICLES: Article[] = [
     desc: '자주 가는 매장은 즐겨찾기에 추가하고, 단축 주문으로 출근길 시간을 줄여보세요.',
     author: '편집부',
     date: '2025.11.25',
-    readTime: 4,
     emoji: '📱',
     variant: 'mint',
   },
@@ -61,7 +58,6 @@ const ARTICLES: Article[] = [
     desc: '패스오더 신규 가입 회원이라면 누구나, 한 잔 가격을 줄여주는 첫 주문 쿠폰을 챙겨가세요.',
     author: '편집부',
     date: '2025.11.20',
-    readTime: 2,
     emoji: '🎁',
     variant: 'peach',
   },
@@ -72,7 +68,6 @@ const ARTICLES: Article[] = [
     desc: '회의 직전 짧게 들르기 좋은 매장만 골라봤어요.',
     author: '김도현',
     date: '2025.11.18',
-    readTime: 5,
     emoji: '🥐',
     variant: 'cream',
   },
@@ -83,7 +78,6 @@ const ARTICLES: Article[] = [
     desc: '점심 피크에도 줄 없이 먹을 수 있는 패스오더 매장 모음.',
     author: '박서윤',
     date: '2025.11.14',
-    readTime: 6,
     emoji: '🍜',
     variant: 'sky',
   },
@@ -94,7 +88,6 @@ const ARTICLES: Article[] = [
     desc: '결제 직전에 적용 가능한 쿠폰이 자동으로 떠요. 놓치기 쉬운 설정 한 가지.',
     author: '편집부',
     date: '2025.11.11',
-    readTime: 3,
     emoji: '🎫',
     variant: 'mint',
   },
@@ -105,7 +98,6 @@ const ARTICLES: Article[] = [
     desc: '창가 자리, 따뜻한 라떼, 잔잔한 플레이리스트가 있는 곳.',
     author: '이주연',
     date: '2025.11.07',
-    readTime: 7,
     emoji: '☔️',
     variant: 'sky',
   },
@@ -116,7 +108,6 @@ const ARTICLES: Article[] = [
     desc: '갓 구운 빵을 줄 없이 받기 좋은 시간대까지 정리했어요.',
     author: '김도현',
     date: '2025.11.04',
-    readTime: 5,
     emoji: '🥐',
     variant: 'cream',
   },
@@ -127,15 +118,14 @@ const ARTICLES: Article[] = [
     desc: '제휴 매장 한정, 한 잔 무료 쿠폰을 챙겨가세요.',
     author: '편집부',
     date: '2025.10.30',
-    readTime: 2,
     emoji: '🎄',
     variant: 'peach',
   },
 ];
 
 type ViewMode = 'grid' | 'list';
-type SortOption = '최신순' | '인기순' | '읽는 시간 짧은 순';
-const SORT_OPTIONS: SortOption[] = ['최신순', '인기순', '읽는 시간 짧은 순'];
+type SortOption = '최신순' | '인기순';
+const SORT_OPTIONS: SortOption[] = ['최신순', '인기순'];
 
 export default function MagazineListPage() {
   const [activeCat, setActiveCat] = useState('all');
@@ -256,8 +246,6 @@ export default function MagazineListPage() {
                 <span className="author">{featured.author}</span>
                 <span className="dot" />
                 <span>{featured.date}</span>
-                <span className="dot" />
-                <span>읽기 {featured.readTime}분</span>
               </div>
             </div>
           </article>
@@ -349,8 +337,6 @@ export default function MagazineListPage() {
                     <h3 className="ml-card-title">{a.title}</h3>
                     <div className="ml-card-meta">
                       <span>{a.date}</span>
-                      <span className="dot" />
-                      <span>읽기 {a.readTime}분</span>
                     </div>
                   </div>
                 </article>
@@ -371,8 +357,6 @@ export default function MagazineListPage() {
                         <span className="author">{a.author}</span>
                         <span className="dot" />
                         <span>{a.date}</span>
-                        <span className="dot" />
-                        <span>읽기 {a.readTime}분</span>
                       </div>
                     </div>
                   </article>

@@ -1126,9 +1126,94 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   AppLinkButton — 앱으로 3초만에 주문하기 (단일 버튼)
+   공통 — 그룹 헤더
    ------------------------------------------------------------------------- */
-.bd-mdx-applink {
+.bd-mdx-group {
+  padding: 24px 16px 4px;
+  border-top: 8px solid #F7F7F7;
+}
+.bd-mdx-group:first-of-type { border-top: 0; }
+.bd-mdx-group-eyebrow {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
+  font-size: 11px; font-weight: 800; color: #D84F1E;
+  background: #FFF2ED;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: .3px;
+  margin-bottom: 8px;
+}
+.bd-mdx-group-title {
+  font-size: 18px; font-weight: 800; color: #2A2A2A;
+  margin: 0 0 4px;
+  letter-spacing: -.2px;
+}
+.bd-mdx-group-desc {
+  font-size: 12.5px; line-height: 19px; color: #7D7D7D;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   공통 1 — 블로그 글 카드
+   ------------------------------------------------------------------------- */
+.bd-mdx-article {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px;
+  background: #fff;
+}
+.bd-mdx-article-thumb {
+  width: 64px; height: 64px;
+  border-radius: 10px;
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  background-size: cover; background-position: center;
+}
+.bd-mdx-article-body {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 4px;
+  align-items: flex-start;
+}
+.bd-mdx-article-badge {
+  display: inline-flex; align-items: center;
+  height: 18px; padding: 0 6px;
+  background: #F4F4F4;
+  border-radius: 4px;
+  font-size: 10px; font-weight: 800; color: #5E6168;
+}
+.bd-mdx-article-title {
+  font-size: 14px; line-height: 20px; font-weight: 800; color: #333;
+  letter-spacing: -.2px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bd-mdx-article-meta {
+  font-size: 11.5px; color: #7D7D7D;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.bd-mdx-article-meta b { color: #5E6168; font-weight: 800; }
+.bd-mdx-article-meta .sep { color: #D2D2D2; }
+.bd-mdx-article-chev { flex: none; }
+
+.bd-mdx-article-card {
+  margin: 12px 0 18px;
+  border: 1px solid #EDEDED;
+  border-radius: 12px;
+}
+.bd-mdx-article-list { margin: 12px 0 18px; }
+.bd-mdx-article-list-body {
+  border-top: 1px solid #EDEDED;
+  border-bottom: 1px solid #EDEDED;
+  background: #fff;
+}
+.bd-mdx-article-list-body .bd-mdx-article-row + .bd-mdx-article-row {
+  border-top: 1px solid #F4F4F4;
+}
+
+/* -------------------------------------------------------------------------
+   공통 3 — 링크 버튼
+   ------------------------------------------------------------------------- */
+.bd-mdx-linkbtn {
   display: inline-flex; align-items: center; justify-content: center;
   gap: 6px;
   width: 100%;
@@ -1137,6 +1222,7 @@ body {
   padding: 0 18px;
   background: #FF7949;
   color: #fff;
+  text-decoration: none;
   border: 0;
   border-radius: 12px;
   font-family: inherit;
@@ -1146,5 +1232,75 @@ body {
   box-shadow: 0 6px 16px -4px rgba(255,121,73,.4), 0 2px 6px -2px rgba(16,24,40,.1);
   transition: background .15s, transform .1s;
 }
-.bd-mdx-applink:hover { background: #E86232; }
-.bd-mdx-applink:active { transform: translateY(1px); background: #BD3B0C; }
+.bd-mdx-linkbtn:hover { background: #E86232; }
+.bd-mdx-linkbtn:active { transform: translateY(1px); background: #BD3B0C; }
+
+/* -------------------------------------------------------------------------
+   공통 4 — FAQ 아코디언
+   ------------------------------------------------------------------------- */
+.bd-mdx-faq {
+  margin: 12px 0 18px;
+  border: 1px solid #EDEDED;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+.bd-mdx-faq-item + .bd-mdx-faq-item {
+  border-top: 1px solid #F4F4F4;
+}
+.bd-mdx-faq-q {
+  display: flex; align-items: flex-start; gap: 8px;
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+.bd-mdx-faq-q:hover { background: #FAFAFA; }
+.bd-mdx-faq-q-prefix {
+  flex: none;
+  font-size: 14px; font-weight: 800; color: #FF7949;
+  line-height: 22px;
+}
+.bd-mdx-faq-q-text {
+  flex: 1; min-width: 0;
+  font-size: 14px; line-height: 22px; font-weight: 800; color: #333;
+  letter-spacing: -.2px;
+}
+.bd-mdx-faq-q-chev {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #AAA;
+  transition: transform .2s;
+  padding-top: 3px;
+}
+.bd-mdx-faq-item.open .bd-mdx-faq-q-chev {
+  transform: rotate(180deg);
+  color: #FF7949;
+}
+.bd-mdx-faq-a {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .25s cubic-bezier(.4,0,.2,1);
+  background: #FFFCFA;
+}
+.bd-mdx-faq-item.open .bd-mdx-faq-a {
+  max-height: 400px;
+}
+.bd-mdx-faq-a-inner {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 12px 16px 16px;
+  border-top: 1px dashed #FFE4DB;
+}
+.bd-mdx-faq-a-prefix {
+  flex: none;
+  font-size: 14px; font-weight: 800; color: #5E6168;
+  line-height: 21px;
+}
+.bd-mdx-faq-a-text {
+  flex: 1; min-width: 0;
+  font-size: 13.5px; line-height: 21px; color: #5E6168;
+  margin: 0;
+}

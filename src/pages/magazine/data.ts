@@ -52,11 +52,11 @@ export const TAGS = [
 ];
 
 export const RELATED: RelatedItem[] = [
-  { cat: '연남동', emoji: '💻', bg: '#E5EAEF', title: '연남동 디지털 노마드 카페 10선 — 와이파이 빠른 곳만', date: '2025.11.20', read: 6 },
-  { cat: '을지로', emoji: '🍃', bg: '#E8F5E9', title: '을지로 노포 옆 작업 카페 — 한적함이 무기인 8곳', date: '2025.11.14', read: 7 },
-  { cat: '성수동', emoji: '🍰', bg: '#FFF2ED', title: '성수동에서 진짜 맛있는 디저트 카페 9곳', date: '2025.10.30', read: 5 },
-  { cat: '한남동', emoji: '📖', bg: '#F7F7F7', title: '한남동 조용한 1인 카페 7곳', date: '2025.10.18', read: 4 },
-  { cat: '성수동', emoji: '🍷', bg: '#FCE4EC', title: '퇴근 후 들르기 좋은 성수 와인바 6곳', date: '2025.09.28', read: 5 },
+  { cat: '성수동 카페', emoji: '🍰', bg: '#FFF2ED', title: '성수동에서 진짜 맛있는 디저트 카페 9곳', date: '2025.10.30', read: 5 },
+  { cat: '성수동 카페', emoji: '🌿', bg: '#E8F5E9', title: '성수동 조용한 1인 카페 BEST 7 — 진짜 몰입되는 곳만', date: '2025.10.18', read: 6 },
+  { cat: '성수동 카페', emoji: '☕️', bg: '#E5EAEF', title: '성수동 스페셜티 커피 로스터리 8곳 — 원두 취향 찾기', date: '2025.10.04', read: 7 },
+  { cat: '성수동 카페', emoji: '🥐', bg: '#FFF8E1', title: '성수동 베이커리 카페 6곳 — 평일 오전 빵 맛집', date: '2025.09.22', read: 5 },
+  { cat: '성수동 카페', emoji: '🌅', bg: '#FCE4EC', title: '성수동 루프탑 카페 5곳 — 노을 보며 마시기 좋은 곳', date: '2025.09.08', read: 4 },
 ];
 
 export const fmt = (n: number) => n.toLocaleString('ko-KR');
