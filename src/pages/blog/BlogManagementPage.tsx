@@ -8,6 +8,7 @@ type PostLocation = 'B2B' | '플랫폼';
 interface Post {
   id: string;
   title: string;
+  url: string;
   category: string;
   author: string;
   status: PublishStatus;
@@ -20,37 +21,86 @@ interface Post {
   pinned?: boolean;
 }
 
+interface PostMeta {
+  description: string;
+  tags: readonly string[];
+}
+
+const POST_META: Record<string, PostMeta> = {
+  p1:  { description: '성수동에서 노트북 작업하기 좋은 카페 12곳을 콘센트·와이파이·분위기 기준으로 비교했습니다.', tags: ['카페', '성수동', '노트북'] },
+  p2:  { description: '즐겨찾기를 활용해 주문 시간을 3초까지 단축하는 방법을 정리했습니다.',                tags: ['주문', '즐겨찾기', '팁'] },
+  p3:  { description: '11월 한정으로 첫 주문 시 사용할 수 있는 3,000원 할인 쿠폰을 안내합니다.',           tags: ['쿠폰', '할인', '11월'] },
+  p4:  { description: '강남역 인근에서 30분 짧은 미팅에 적합한 카페 6곳을 정리했습니다.',                  tags: ['카페', '강남역', '미팅'] },
+  p5:  { description: '연남동에서 줄 서지 않고 점심을 빠르게 해결할 수 있는 식당을 추천합니다.',           tags: ['맛집', '연남동', '점심'] },
+  p6:  { description: '발급받은 쿠폰을 자동으로 적용하고 한 번에 확인하는 방법을 정리했습니다.',           tags: ['쿠폰', '자동', '팁'] },
+  p7:  { description: '비 오는 날 가기 좋은 도심 카페 8곳을 분위기·위치 기준으로 선별했습니다.',          tags: ['카페', '비', '도심'] },
+  p8:  { description: '한남동 베이커리 BEST 5와 평일 오전 추천 메뉴를 함께 소개합니다.',                   tags: ['베이커리', '한남동', '맛집'] },
+  p9:  { description: '12월 패스오더 X 카페 라운드 시즌 이벤트를 안내합니다.',                              tags: ['이벤트', '12월', '카페'] },
+  p10: { description: '매장 영업시간 등록·수정을 단계별로 정리한 운영 가이드입니다.',                       tags: ['운영', '영업시간', '가이드'] },
+  p11: { description: '매장별로 쿠폰 발급을 자동화하는 설정 방법을 안내합니다.',                            tags: ['운영', '쿠폰', '자동화'] },
+  p12: { description: '주문 알림이 오지 않을 때 점검할 6가지 항목을 정리했습니다.',                         tags: ['알림', '문제해결', '체크리스트'] },
+  p13: { description: '12월부터 적용되는 매장 운영자 대상 정산 정책 변경을 안내합니다.',                    tags: ['공지', '정산', '12월'] },
+  p14: { description: '재방문 고객 분석 리포트의 항목과 활용 방법을 소개합니다.',                           tags: ['리포트', '재방문', '데이터'] },
+  p15: { description: '엑셀 템플릿을 이용한 메뉴판 일괄 등록 방법을 가이드합니다.',                          tags: ['운영', '메뉴판', '엑셀'] },
+  p16: { description: '망원동의 한적한 평일 오전 카페 산책 코스를 정리했습니다.',                            tags: ['카페', '망원동', '산책'] },
+  p17: { description: '겨울에 따뜻하게 즐기는 음료 BEST 7을 추천합니다.',                                   tags: ['음료', '겨울', '추천'] },
+  p18: { description: '작업과 영감에 좋은 플레이리스트가 흐르는 카페 9곳을 추렸습니다.',                     tags: ['카페', '플레이리스트', '작업'] },
+  p19: { description: '리뷰 응답을 1줄로 친절하게 처리하는 가이드를 안내합니다.',                            tags: ['운영', '리뷰', '가이드'] },
+  p20: { description: '월간 매출 리포트를 효과적으로 읽는 방법을 정리했습니다.',                             tags: ['리포트', '매출', '월간'] },
+  p21: { description: '회사 근처 점심 한 끼 — 일산·판교·강남 지역별 추천을 모았습니다.',                       tags: ['맛집', '점심', '회사'] },
+  p22: { description: '연말 이벤트 운영을 위한 점검 체크리스트입니다.',                                      tags: ['이벤트', '연말', '체크리스트'] },
+  p23: { description: '강북 산책로 옆에 위치한 카페 4곳을 소개합니다.',                                      tags: ['카페', '강북', '산책'] },
+  p24: { description: '쿠폰 발급 대비 사용률을 높이기 위한 효율 분석 방법을 안내합니다.',                     tags: ['리포트', '쿠폰', '효율'] },
+};
+
+function getPostMeta(postId: string): PostMeta {
+  return POST_META[postId] ?? { description: '', tags: [] };
+}
+
 const POSTS: Post[] = [
-  { id: 'p1',  title: '성수동 노트북 작업 카페 12곳 — 콘센트, 와이파이, 분위기까지', category: '카페 비교/추천', author: '이주연', status: '발행',     location: '플랫폼', views: 8412,  likes: 318, comments: 24, publishedAt: '2025.11.28', updatedAt: '2025.11.28', pinned: true },
-  { id: 'p2',  title: '주문 3초 단축, 즐겨찾기 200% 활용법',                  category: '패스오더 이용 팁',  author: '편집부', status: '발행',     location: '플랫폼', views: 4203,  likes: 187, comments: 12, publishedAt: '2025.11.25', updatedAt: '2025.11.26' },
-  { id: 'p3',  title: '11월 한정 — 첫 주문 3,000원 할인 쿠폰',                category: '이벤트',          author: '편집부', status: '발행',     location: '플랫폼', views: 12089, likes: 642, comments: 58, publishedAt: '2025.11.20', updatedAt: '2025.11.20' },
-  { id: 'p4',  title: '강남역 30분 미팅에 좋은 카페 6곳',                      category: '카페 비교/추천',   author: '김도현', status: '미리보기',     location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.05', updatedAt: '2025.11.30' },
-  { id: 'p5',  title: '연남동 점심 한 끼 — 줄 안 서고 먹는 법',                 category: '맛집 추천',       author: '박서윤', status: '미리보기', location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '-',          updatedAt: '2025.11.14' },
-  { id: 'p6',  title: '쿠폰 자동 적용, 한 번에 확인하는 법',                     category: '패스오더 이용 팁', author: '편집부', status: '비공개',   location: '플랫폼', views: 1820,  likes: 41,  comments: 3,  publishedAt: '2025.11.11', updatedAt: '2025.11.15' },
-  { id: 'p7',  title: '비 오는 날 가기 좋은 도심 카페 8곳',                     category: '카페 비교/추천',   author: '이주연', status: '발행',     location: '플랫폼', views: 6041,  likes: 274, comments: 19, publishedAt: '2025.11.07', updatedAt: '2025.11.07' },
-  { id: 'p8',  title: '한남동 베이커리 BEST 5 — 평일 오전 추천',                category: '맛집 추천',       author: '김도현', status: '발행',     location: '플랫폼', views: 5310,  likes: 248, comments: 16, publishedAt: '2025.11.04', updatedAt: '2025.11.05' },
-  { id: 'p9',  title: '12월 패스오더 X 카페 라운드 시즌',                      category: '이벤트',          author: '편집부', status: '미리보기',     location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.01', updatedAt: '2025.11.29' },
-  { id: 'p10', title: '[운영가이드] 영업시간 등록·수정 한 번에 정리',             category: '운영 가이드',      author: '운영팀', status: '발행',     location: 'B2B',   views: 1043,  likes: 22,  comments: 4,  publishedAt: '2025.11.18', updatedAt: '2025.11.22', pinned: true },
-  { id: 'p11', title: '쿠폰 발급 자동화, 매장 별 설정법',                       category: '운영 가이드',      author: '운영팀', status: '발행',     location: 'B2B',   views: 812,   likes: 18,  comments: 2,  publishedAt: '2025.11.12', updatedAt: '2025.11.12' },
-  { id: 'p12', title: '주문 알림 못 받았을 때 체크리스트 6가지',                  category: '문제 해결',       author: '운영팀', status: '발행',     location: 'B2B',   views: 1452,  likes: 33,  comments: 9,  publishedAt: '2025.11.06', updatedAt: '2025.11.10' },
-  { id: 'p13', title: '12월 매장 운영자 대상 정산 변경 안내',                    category: '공지사항',        author: '운영팀', status: '미리보기',     location: 'B2B',   views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.02', updatedAt: '2025.11.28' },
-  { id: 'p14', title: '재방문 고객 분석 리포트 사용법',                         category: '리포트',         author: '데이터팀', status: '발행',     location: 'B2B',   views: 524,   likes: 11,  comments: 1,  publishedAt: '2025.10.30', updatedAt: '2025.10.30' },
-  { id: 'p15', title: '메뉴판 일괄 등록 — 엑셀 템플릿 가이드',                   category: '운영 가이드',      author: '운영팀', status: '미리보기', location: 'B2B',   views: 0,     likes: 0,   comments: 0,  publishedAt: '-',          updatedAt: '2025.11.21' },
-  { id: 'p16', title: '망원 카페 산책 코스 — 한적한 평일 오전',                  category: '카페 비교/추천',   author: '이주연', status: '발행',     location: '플랫폼', views: 3920,  likes: 162, comments: 11, publishedAt: '2025.10.25', updatedAt: '2025.10.25' },
-  { id: 'p17', title: '겨울 음료 BEST 7 — 따뜻한 잔에 담긴 추천',                category: '맛집 추천',       author: '박서윤', status: '발행',     location: '플랫폼', views: 4781,  likes: 219, comments: 14, publishedAt: '2025.10.21', updatedAt: '2025.10.22' },
-  { id: 'p18', title: '플레이리스트 좋은 카페 9곳 — 작업+영감용',                 category: '카페 비교/추천',   author: '이주연', status: '비공개',   location: '플랫폼', views: 410,   likes: 8,   comments: 1,  publishedAt: '2025.10.18', updatedAt: '2025.10.20' },
-  { id: 'p19', title: '리뷰 응답 가이드 — 1줄로 끝내는 친절 답변',                category: '운영 가이드',      author: '운영팀', status: '발행',     location: 'B2B',   views: 932,   likes: 27,  comments: 5,  publishedAt: '2025.10.15', updatedAt: '2025.10.17' },
-  { id: 'p20', title: '월간 매출 리포트 읽는 법',                              category: '리포트',         author: '데이터팀', status: '발행',     location: 'B2B',   views: 612,   likes: 14,  comments: 2,  publishedAt: '2025.10.10', updatedAt: '2025.10.10' },
-  { id: 'p21', title: '회사 근처 점심 한 끼 — 일산·판교·강남편',                   category: '맛집 추천',       author: '김도현', status: '미리보기',     location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.08', updatedAt: '2025.11.28' },
-  { id: 'p22', title: '연말 이벤트 운영 체크리스트',                            category: '공지사항',        author: '운영팀', status: '발행',     location: 'B2B',   views: 778,   likes: 21,  comments: 3,  publishedAt: '2025.10.05', updatedAt: '2025.10.06' },
-  { id: 'p23', title: '강북 산책로 옆 카페 4곳',                              category: '카페 비교/추천',   author: '이주연', status: '발행',     location: '플랫폼', views: 2104,  likes: 89,  comments: 6,  publishedAt: '2025.10.01', updatedAt: '2025.10.01' },
-  { id: 'p24', title: '쿠폰 효율 분석 — 발급 대비 사용률 높이기',                 category: '리포트',         author: '데이터팀', status: '미리보기', location: 'B2B',   views: 0,     likes: 0,   comments: 0,  publishedAt: '-',          updatedAt: '2025.11.25' },
+  { id: 'p1',  title: '성수동 노트북 작업 카페 12곳 — 콘센트, 와이파이, 분위기까지', url: '/seongsu-laptop-cafes-12',         category: '카페 비교/추천', author: '이주연', status: '발행',     location: '플랫폼', views: 8412,  likes: 318, comments: 24, publishedAt: '2025.11.28', updatedAt: '2025.11.28', pinned: true },
+  { id: 'p2',  title: '주문 3초 단축, 즐겨찾기 200% 활용법',                  url: '/quick-order-favorites-tips',      category: '패스오더 이용 팁',  author: '편집부', status: '발행',     location: '플랫폼', views: 4203,  likes: 187, comments: 12, publishedAt: '2025.11.25', updatedAt: '2025.11.26' },
+  { id: 'p3',  title: '11월 한정 — 첫 주문 3,000원 할인 쿠폰',                url: '/november-first-order-coupon',     category: '이벤트',          author: '편집부', status: '발행',     location: '플랫폼', views: 12089, likes: 642, comments: 58, publishedAt: '2025.11.20', updatedAt: '2025.11.20' },
+  { id: 'p4',  title: '강남역 30분 미팅에 좋은 카페 6곳',                      url: '/gangnam-station-meeting-cafes',   category: '카페 비교/추천',   author: '김도현', status: '미리보기',     location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.05', updatedAt: '2025.11.30' },
+  { id: 'p5',  title: '연남동 점심 한 끼 — 줄 안 서고 먹는 법',                 url: '/yeonnam-lunch-spots',             category: '맛집 추천',       author: '박서윤', status: '미리보기', location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '-',          updatedAt: '2025.11.14' },
+  { id: 'p6',  title: '쿠폰 자동 적용, 한 번에 확인하는 법',                     url: '/auto-coupon-apply-guide',         category: '패스오더 이용 팁', author: '편집부', status: '비공개',   location: '플랫폼', views: 1820,  likes: 41,  comments: 3,  publishedAt: '2025.11.11', updatedAt: '2025.11.15' },
+  { id: 'p7',  title: '비 오는 날 가기 좋은 도심 카페 8곳',                     url: '/rainy-day-city-cafes',            category: '카페 비교/추천',   author: '이주연', status: '발행',     location: '플랫폼', views: 6041,  likes: 274, comments: 19, publishedAt: '2025.11.07', updatedAt: '2025.11.07' },
+  { id: 'p8',  title: '한남동 베이커리 BEST 5 — 평일 오전 추천',                url: '/hannam-bakery-best5',             category: '맛집 추천',       author: '김도현', status: '발행',     location: '플랫폼', views: 5310,  likes: 248, comments: 16, publishedAt: '2025.11.04', updatedAt: '2025.11.05' },
+  { id: 'p9',  title: '12월 패스오더 X 카페 라운드 시즌',                      url: '/december-passorder-cafe-round',   category: '이벤트',          author: '편집부', status: '미리보기',     location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.01', updatedAt: '2025.11.29' },
+  { id: 'p10', title: '[운영가이드] 영업시간 등록·수정 한 번에 정리',             url: '/business-hours-guide',            category: '운영 가이드',      author: '운영팀', status: '발행',     location: 'B2B',   views: 1043,  likes: 22,  comments: 4,  publishedAt: '2025.11.18', updatedAt: '2025.11.22', pinned: true },
+  { id: 'p11', title: '쿠폰 발급 자동화, 매장 별 설정법',                       url: '/coupon-issue-automation',         category: '운영 가이드',      author: '운영팀', status: '발행',     location: 'B2B',   views: 812,   likes: 18,  comments: 2,  publishedAt: '2025.11.12', updatedAt: '2025.11.12' },
+  { id: 'p12', title: '주문 알림 못 받았을 때 체크리스트 6가지',                  url: '/order-notification-troubleshoot',category: '문제 해결',       author: '운영팀', status: '발행',     location: 'B2B',   views: 1452,  likes: 33,  comments: 9,  publishedAt: '2025.11.06', updatedAt: '2025.11.10' },
+  { id: 'p13', title: '12월 매장 운영자 대상 정산 변경 안내',                    url: '/december-settlement-notice',      category: '공지사항',        author: '운영팀', status: '미리보기',     location: 'B2B',   views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.02', updatedAt: '2025.11.28' },
+  { id: 'p14', title: '재방문 고객 분석 리포트 사용법',                         url: '/returning-customer-report',       category: '리포트',         author: '데이터팀', status: '발행',     location: 'B2B',   views: 524,   likes: 11,  comments: 1,  publishedAt: '2025.10.30', updatedAt: '2025.10.30' },
+  { id: 'p15', title: '메뉴판 일괄 등록 — 엑셀 템플릿 가이드',                   url: '/menu-bulk-upload-guide',          category: '운영 가이드',      author: '운영팀', status: '미리보기', location: 'B2B',   views: 0,     likes: 0,   comments: 0,  publishedAt: '-',          updatedAt: '2025.11.21' },
+  { id: 'p16', title: '망원 카페 산책 코스 — 한적한 평일 오전',                  url: '/mangwon-cafe-walk-course',        category: '카페 비교/추천',   author: '이주연', status: '발행',     location: '플랫폼', views: 3920,  likes: 162, comments: 11, publishedAt: '2025.10.25', updatedAt: '2025.10.25' },
+  { id: 'p17', title: '겨울 음료 BEST 7 — 따뜻한 잔에 담긴 추천',                url: '/winter-drinks-best7',             category: '맛집 추천',       author: '박서윤', status: '발행',     location: '플랫폼', views: 4781,  likes: 219, comments: 14, publishedAt: '2025.10.21', updatedAt: '2025.10.22' },
+  { id: 'p18', title: '플레이리스트 좋은 카페 9곳 — 작업+영감용',                 url: '/playlist-friendly-cafes',         category: '카페 비교/추천',   author: '이주연', status: '비공개',   location: '플랫폼', views: 410,   likes: 8,   comments: 1,  publishedAt: '2025.10.18', updatedAt: '2025.10.20' },
+  { id: 'p19', title: '리뷰 응답 가이드 — 1줄로 끝내는 친절 답변',                url: '/review-reply-guide',              category: '운영 가이드',      author: '운영팀', status: '발행',     location: 'B2B',   views: 932,   likes: 27,  comments: 5,  publishedAt: '2025.10.15', updatedAt: '2025.10.17' },
+  { id: 'p20', title: '월간 매출 리포트 읽는 법',                              url: '/monthly-sales-report',            category: '리포트',         author: '데이터팀', status: '발행',     location: 'B2B',   views: 612,   likes: 14,  comments: 2,  publishedAt: '2025.10.10', updatedAt: '2025.10.10' },
+  { id: 'p21', title: '회사 근처 점심 한 끼 — 일산·판교·강남편',                   url: '/office-lunch-ilsan-pangyo-gangnam',category: '맛집 추천',       author: '김도현', status: '미리보기',     location: '플랫폼', views: 0,     likes: 0,   comments: 0,  publishedAt: '2025.12.08', updatedAt: '2025.11.28' },
+  { id: 'p22', title: '연말 이벤트 운영 체크리스트',                            url: '/year-end-event-checklist',        category: '공지사항',        author: '운영팀', status: '발행',     location: 'B2B',   views: 778,   likes: 21,  comments: 3,  publishedAt: '2025.10.05', updatedAt: '2025.10.06' },
+  { id: 'p23', title: '강북 산책로 옆 카페 4곳',                              url: '/gangbuk-walking-cafes',           category: '카페 비교/추천',   author: '이주연', status: '발행',     location: '플랫폼', views: 2104,  likes: 89,  comments: 6,  publishedAt: '2025.10.01', updatedAt: '2025.10.01' },
+  { id: 'p24', title: '쿠폰 효율 분석 — 발급 대비 사용률 높이기',                 url: '/coupon-efficiency-analysis',      category: '리포트',         author: '데이터팀', status: '미리보기', location: 'B2B',   views: 0,     likes: 0,   comments: 0,  publishedAt: '-',          updatedAt: '2025.11.25' },
 ];
 
 const STATUSES: PublishStatus[] = ['발행', '미리보기', '비공개'];
 const LOCATIONS: PostLocation[] = ['B2B', '플랫폼'];
 type PinnedFlag = '예' | '아니오';
 const PINNED_FLAGS: PinnedFlag[] = ['예', '아니오'];
+type Period = '일주일' | '한달' | '1년' | '전체';
+const PERIODS: readonly Period[] = ['일주일', '한달', '1년', '전체'];
+
+const INITIAL_CATEGORIES: readonly string[] = [
+  '카페 비교/추천',
+  '맛집 추천',
+  '패스오더 이용 팁',
+  '이벤트',
+  '공지사항',
+  '운영 가이드',
+  '리포트',
+  '문제 해결',
+];
 
 const STATUS_TONE: Record<PublishStatus, 'orange' | 'green' | 'gray' | 'red'> = {
   발행: 'green',
@@ -62,17 +112,21 @@ interface FilterDraft {
   statuses: Set<PublishStatus>;
   locations: Set<PostLocation>;
   pinned: Set<PinnedFlag>;
+  categories: Set<string>;
   from: string;
   to: string;
+  period: Period;
   query: string;
 }
 
-const emptyFilter = (): FilterDraft => ({
+const emptyFilter = (categories: readonly string[]): FilterDraft => ({
   statuses: new Set(STATUSES),
   locations: new Set(LOCATIONS),
   pinned: new Set(PINNED_FLAGS),
+  categories: new Set(categories),
   from: '전체',
   to: '전체',
+  period: '전체',
   query: '',
 });
 
@@ -119,6 +173,16 @@ function PlusIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+function InfoIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx={12} cy={12} r={10} />
+      <line x1="12" y1="8" x2="12" y2="12" />
+      <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+  );
+}
+
 function CloseIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -161,6 +225,22 @@ function Checkbox({ checked, label, onChange }: CheckboxProps) {
       </span>
       <input type="checkbox" checked={checked} onChange={onChange} />
       <span className="bm-check-label">{label}</span>
+    </label>
+  );
+}
+
+interface RadioProps {
+  checked: boolean;
+  label: string;
+  onChange: () => void;
+}
+
+function Radio({ checked, label, onChange }: RadioProps) {
+  return (
+    <label className={`bm-radio${checked ? ' is-checked' : ''}`}>
+      <span className="bm-radio-dot" aria-hidden="true" />
+      <input type="radio" checked={checked} onChange={onChange} />
+      <span className="bm-radio-label">{label}</span>
     </label>
   );
 }
@@ -212,24 +292,26 @@ function Select({ value, options, onChange }: SelectProps) {
 
 const DAY_OPTIONS = ['전체', '7', '14', '30', '60', '90', '180', '365'];
 const PAGE_SIZE = 8;
-const CATEGORY_OPTIONS = ['카페 비교/추천', '맛집 추천', '패스오더 이용 팁', '이벤트', '공지사항', '운영 가이드', '리포트', '문제 해결'];
 
-// Stub: server resolves Notion URL → page title. Wireframe returns a fixed value.
-const NOTION_SYNCED_TITLE = '[동기화됨] 노션 페이지 제목 예시';
+const DESCRIPTION_MAX = 200;
 
 interface ComposeDraft {
   notionUrl: string;
   title: string;
+  description: string;
+  tags: readonly string[];
   category: string;
   location: PostLocation;
   thumbnail: File | null;
   pinned: boolean;
 }
 
-const emptyDraft = (): ComposeDraft => ({
+const emptyDraft = (categories: readonly string[]): ComposeDraft => ({
   notionUrl: '',
   title: '',
-  category: CATEGORY_OPTIONS[0],
+  description: '',
+  tags: [],
+  category: categories[0] ?? '',
   location: '플랫폼',
   thumbnail: null,
   pinned: false,
@@ -338,22 +420,80 @@ function ThumbnailUploader({ file, onChange }: ThumbnailUploaderProps) {
   );
 }
 
+interface TagInputProps {
+  value: readonly string[];
+  onChange: (next: string[]) => void;
+  placeholder?: string;
+}
+
+function TagInput({ value, onChange, placeholder = '태그 입력 후 Enter' }: TagInputProps) {
+  const [input, setInput] = useState('');
+  const trimmed = input.trim();
+  const canAdd = trimmed.length > 0 && !value.includes(trimmed);
+
+  const handleAdd = () => {
+    if (!canAdd) return;
+    onChange([...value, trimmed]);
+    setInput('');
+  };
+
+  const handleRemove = (tag: string) => {
+    onChange(value.filter((t) => t !== tag));
+  };
+
+  return (
+    <div className="bm-tag-input">
+      {value.map((tag) => (
+        <span key={tag} className="bm-tag-chip">
+          <span className="bm-tag-chip-text">{tag}</span>
+          <button
+            type="button"
+            className="bm-tag-chip-remove"
+            onClick={() => handleRemove(tag)}
+            aria-label={`${tag} 삭제`}
+          >
+            <CloseIcon size={12} />
+          </button>
+        </span>
+      ))}
+      <input
+        type="text"
+        className="bm-tag-input-field"
+        placeholder={value.length === 0 ? placeholder : ''}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.nativeEvent.isComposing || e.keyCode === 229) return;
+          if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            handleAdd();
+          } else if (e.key === 'Backspace' && input === '' && value.length > 0) {
+            e.preventDefault();
+            handleRemove(value[value.length - 1]);
+          }
+        }}
+      />
+    </div>
+  );
+}
+
 interface ComposePanelProps {
   open: boolean;
+  categories: readonly string[];
   onClose: () => void;
   onSave: (draft: ComposeDraft) => void;
 }
 
-function ComposePanel({ open, onClose, onSave }: ComposePanelProps) {
-  const [draft, setDraft] = useState<ComposeDraft>(emptyDraft);
+function ComposePanel({ open, categories, onClose, onSave }: ComposePanelProps) {
+  const [draft, setDraft] = useState<ComposeDraft>(() => emptyDraft(categories));
   const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
     if (open) {
-      setDraft(emptyDraft());
+      setDraft(emptyDraft(categories));
       setSyncing(false);
     }
-  }, [open]);
+  }, [open, categories]);
 
   useEffect(() => {
     if (!open) return;
@@ -370,10 +510,7 @@ function ComposePanel({ open, onClose, onSave }: ComposePanelProps) {
   const handleSync = () => {
     if (!canSync) return;
     setSyncing(true);
-    window.setTimeout(() => {
-      setDraft((d) => ({ ...d, title: NOTION_SYNCED_TITLE }));
-      setSyncing(false);
-    }, 400);
+    window.setTimeout(() => setSyncing(false), 400);
   };
 
   return (
@@ -414,46 +551,68 @@ function ComposePanel({ open, onClose, onSave }: ComposePanelProps) {
                 {syncing ? '동기화 중…' : '동기화'}
               </button>
             </div>
-            {draft.title && (
-              <div className="bm-readout">
-                <span className="bm-readout-label">제목</span>
-                <span className="bm-readout-value">{draft.title}</span>
-              </div>
-            )}
           </div>
 
-          <div className="bm-field-grid">
-            <div className="bm-field">
-              <label className="bm-field-label">게시 위치</label>
-              <div className="bm-segment" role="radiogroup">
-                {LOCATIONS.map((loc) => (
-                  <button
-                    key={loc}
-                    type="button"
-                    role="radio"
-                    aria-checked={draft.location === loc}
-                    className={`bm-segment-item${draft.location === loc ? ' is-active' : ''}`}
-                    onClick={() => setDraft((d) => ({ ...d, location: loc }))}
-                  >
-                    {loc}
-                  </button>
-                ))}
-              </div>
+          <div className="bm-field">
+            <label className="bm-field-label" htmlFor="bm-title">제목</label>
+            <input
+              id="bm-title"
+              type="text"
+              className="bm-input"
+              placeholder="제목을 입력해 주세요"
+              value={draft.title}
+              onChange={(e) => setDraft((d) => ({ ...d, title: e.target.value }))}
+            />
+          </div>
+
+          <div className="bm-field">
+            <label className="bm-field-label" htmlFor="bm-description">설명</label>
+            <textarea
+              id="bm-description"
+              className="bm-textarea bm-textarea-sm"
+              placeholder="설명을 입력해 주세요"
+              value={draft.description}
+              maxLength={DESCRIPTION_MAX}
+              onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))}
+            />
+            <div className="bm-textarea-counter">({draft.description.length}/{DESCRIPTION_MAX})</div>
+          </div>
+
+          <div className="bm-field">
+            <label className="bm-field-label">태그</label>
+            <TagInput
+              value={draft.tags}
+              onChange={(next) => setDraft((d) => ({ ...d, tags: next }))}
+            />
+          </div>
+
+          <div className="bm-field">
+            <label className="bm-field-label">게시 위치</label>
+            <div className="bm-radio-group" role="radiogroup">
+              {LOCATIONS.map((loc) => (
+                <Radio
+                  key={loc}
+                  checked={draft.location === loc}
+                  label={loc}
+                  onChange={() => setDraft((d) => ({ ...d, location: loc }))}
+                />
+              ))}
             </div>
-            <div className="bm-field">
-              <label className="bm-field-label" htmlFor="bm-category">카테고리</label>
-              <div className="bm-select bm-select-block">
-                <select
-                  id="bm-category"
-                  value={draft.category}
-                  onChange={(e) => setDraft((d) => ({ ...d, category: e.target.value }))}
-                >
-                  {CATEGORY_OPTIONS.map((c) => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                </select>
-                <span className="bm-select-caret" aria-hidden="true"><ChevronDown size={16} /></span>
-              </div>
+          </div>
+
+          <div className="bm-field">
+            <label className="bm-field-label" htmlFor="bm-category">카테고리</label>
+            <div className="bm-select bm-select-block">
+              <select
+                id="bm-category"
+                value={draft.category}
+                onChange={(e) => setDraft((d) => ({ ...d, category: e.target.value }))}
+              >
+                {categories.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <span className="bm-select-caret" aria-hidden="true"><ChevronDown size={16} /></span>
             </div>
           </div>
 
@@ -466,25 +625,27 @@ function ComposePanel({ open, onClose, onSave }: ComposePanelProps) {
           </div>
 
           <div className="bm-field">
-            <label className="bm-toggle">
-              <input
-                type="checkbox"
-                checked={draft.pinned}
-                onChange={(e) => setDraft((d) => ({ ...d, pinned: e.target.checked }))}
-              />
-              <span className={`bm-check-box${draft.pinned ? ' is-on' : ''}`} aria-hidden="true">
-                {draft.pinned && <CheckIcon size={11} />}
-              </span>
-              <span className="bm-toggle-text">
-                <span className="bm-toggle-title">상단 고정</span>
-                <span className="bm-toggle-desc">목록 상단에 고정 노출됩니다</span>
-              </span>
-            </label>
+            <label className="bm-field-label">상단 고정</label>
+            <div className="bm-radio-group" role="radiogroup">
+              {PINNED_FLAGS.map((flag) => (
+                <Radio
+                  key={flag}
+                  checked={(draft.pinned ? '예' : '아니오') === flag}
+                  label={flag}
+                  onChange={() => setDraft((d) => ({ ...d, pinned: flag === '예' }))}
+                />
+              ))}
+            </div>
           </div>
 
-          <p className="bm-panel-note">
-            저장 시 <strong>미리보기</strong> 상태로 등록됩니다.
-          </p>
+          <div className="bm-infobox">
+            <span className="bm-infobox-icon" aria-hidden="true">
+              <InfoIcon size={16} />
+            </span>
+            <span className="bm-infobox-text">
+              저장 시 <strong>미리보기</strong> 상태로 등록됩니다.
+            </span>
+          </div>
         </div>
 
         <footer className="bm-panel-foot">
@@ -506,11 +667,13 @@ function ComposePanel({ open, onClose, onSave }: ComposePanelProps) {
 }
 
 export default function BlogManagementPage() {
-  const [filter, setFilter] = useState<FilterDraft>(emptyFilter);
-  const [applied, setApplied] = useState<FilterDraft>(emptyFilter);
+  const [categories, setCategories] = useState<readonly string[]>(INITIAL_CATEGORIES);
+  const [filter, setFilter] = useState<FilterDraft>(() => emptyFilter(INITIAL_CATEGORIES));
+  const [applied, setApplied] = useState<FilterDraft>(() => emptyFilter(INITIAL_CATEGORIES));
   const [filterOpen, setFilterOpen] = useState(true);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [composeOpen, setComposeOpen] = useState(false);
+  const [categoryPanelOpen, setCategoryPanelOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
@@ -530,7 +693,7 @@ export default function BlogManagementPage() {
   };
 
   const resetFilter = () => {
-    const fresh = emptyFilter();
+    const fresh = emptyFilter(categories);
     setFilter(fresh);
     setApplied(fresh);
     setVisibleCount(PAGE_SIZE);
@@ -541,22 +704,37 @@ export default function BlogManagementPage() {
       statuses: new Set(filter.statuses),
       locations: new Set(filter.locations),
       pinned: new Set(filter.pinned),
+      categories: new Set(filter.categories),
       from: filter.from,
       to: filter.to,
+      period: filter.period,
       query: filter.query.trim(),
     });
     setVisibleCount(PAGE_SIZE);
+  };
+
+  const handleSaveCategories = (next: readonly string[]) => {
+    setCategories(next);
+    setFilter((f) => ({ ...f, categories: new Set(next) }));
+    setApplied((a) => ({ ...a, categories: new Set(next) }));
   };
 
   const filtered = useMemo(() => {
     return POSTS.filter((post) => {
       if (!applied.statuses.has(post.status)) return false;
       if (!applied.locations.has(post.location)) return false;
+      if (applied.categories.size > 0 && !applied.categories.has(post.category)) return false;
       const pinnedFlag: PinnedFlag = post.pinned ? '예' : '아니오';
       if (!applied.pinned.has(pinnedFlag)) return false;
       if (applied.query) {
         const q = applied.query.toLowerCase();
-        if (!post.title.toLowerCase().includes(q) && !post.author.toLowerCase().includes(q)) return false;
+        if (
+          !post.title.toLowerCase().includes(q) &&
+          !post.author.toLowerCase().includes(q) &&
+          !post.url.toLowerCase().includes(q)
+        ) {
+          return false;
+        }
       }
       return true;
     });
@@ -612,14 +790,33 @@ export default function BlogManagementPage() {
                 selected={filter.statuses}
                 onToggle={(opt) => setFilter((f) => ({ ...f, statuses: toggleSet(f.statuses, STATUSES, opt) }))}
               />
+              <CheckboxRow
+                label="카테고리"
+                options={categories}
+                selected={filter.categories}
+                onToggle={(opt) => setFilter((f) => ({ ...f, categories: toggleSet(f.categories, categories, opt) }))}
+              />
               <div className="bm-filter-row">
-                <div className="bm-filter-label">게시 경과일</div>
+                <div className="bm-filter-label">성과 조회</div>
                 <div className="bm-filter-value bm-filter-value-range">
                   <Select value={filter.from} options={DAY_OPTIONS} onChange={(v) => setFilter((f) => ({ ...f, from: v }))} />
                   <span className="bm-filter-suffix">일</span>
                   <span className="bm-filter-divider">~</span>
                   <Select value={filter.to} options={DAY_OPTIONS} onChange={(v) => setFilter((f) => ({ ...f, to: v }))} />
                   <span className="bm-filter-suffix">일</span>
+                  <div className="bm-period-group" role="group" aria-label="기간 빠른 선택">
+                    {PERIODS.map((p) => (
+                      <button
+                        key={p}
+                        type="button"
+                        className={`bm-period-btn${filter.period === p ? ' is-active' : ''}`}
+                        aria-pressed={filter.period === p}
+                        onClick={() => setFilter((f) => ({ ...f, period: p }))}
+                      >
+                        {p}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
               <CheckboxRow
@@ -643,7 +840,7 @@ export default function BlogManagementPage() {
                     </span>
                     <input
                       type="text"
-                      placeholder="제목, 작성자 검색"
+                      placeholder="제목, 작성자, URL 검색"
                       value={filter.query}
                       onChange={(e) => setFilter((f) => ({ ...f, query: e.target.value }))}
                       onKeyDown={(e) => {
@@ -663,13 +860,17 @@ export default function BlogManagementPage() {
               <RefreshIcon size={14} />
               <span>초기화</span>
             </button>
-            <button type="button" className="bm-btn bm-btn-outline-strong" onClick={applyFilter}>
+            <button type="button" className="bm-btn bm-btn-outline" onClick={applyFilter}>
               적용
             </button>
           </div>
         )}
 
         <div className="bm-table-actions">
+          <button type="button" className="bm-btn bm-btn-outline" onClick={() => setCategoryPanelOpen(true)}>
+            <PlusIcon size={16} />
+            <span>카테고리 추가</span>
+          </button>
           <button type="button" className="bm-btn bm-btn-primary" onClick={() => setComposeOpen(true)}>
             <PlusIcon size={16} />
             <span>글 작성</span>
@@ -688,6 +889,7 @@ export default function BlogManagementPage() {
               <thead>
                 <tr>
                   <th className="bm-th-title">제목</th>
+                  <th>URL</th>
                   <th>게시 위치</th>
                   <th>카테고리</th>
                   <th>작성자</th>
@@ -710,6 +912,19 @@ export default function BlogManagementPage() {
                         <span className="bm-td-title-text">{post.title}</span>
                       </div>
                     </td>
+                    <td className="bm-td-url">
+                      <a
+                        className="bm-url-link"
+                        href={post.url}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                        }}
+                        title={post.url}
+                      >
+                        {post.url}
+                      </a>
+                    </td>
                     <td>
                       <span className={`bm-loc bm-loc-${post.location === 'B2B' ? 'b2b' : 'platform'}`}>{post.location}</span>
                     </td>
@@ -728,7 +943,7 @@ export default function BlogManagementPage() {
                 ))}
                 {filtered.length === 0 && (
                   <tr>
-                    <td className="bm-td-empty" colSpan={9}>
+                    <td className="bm-td-empty" colSpan={10}>
                       조건에 맞는 게시글이 없습니다.
                     </td>
                   </tr>
@@ -754,15 +969,125 @@ export default function BlogManagementPage() {
 
       <ComposePanel
         open={composeOpen}
+        categories={categories}
         onClose={() => setComposeOpen(false)}
         onSave={() => setComposeOpen(false)}
+      />
+
+      <CategoryPanel
+        open={categoryPanelOpen}
+        categories={categories}
+        onClose={() => setCategoryPanelOpen(false)}
+        onSave={(next) => {
+          handleSaveCategories(next);
+          setCategoryPanelOpen(false);
+        }}
       />
 
       <DetailPanel
         post={selectedPost}
         open={selectedPostId !== null}
+        categories={categories}
         onClose={() => setSelectedPostId(null)}
       />
+    </div>
+  );
+}
+
+interface CategoryPanelProps {
+  open: boolean;
+  categories: readonly string[];
+  onClose: () => void;
+  onSave: (next: readonly string[]) => void;
+}
+
+function CategoryPanel({ open, categories, onClose, onSave }: CategoryPanelProps) {
+  const [location, setLocation] = useState<PostLocation>('플랫폼');
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    if (open) {
+      setLocation('플랫폼');
+      setName('');
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  const trimmed = name.trim();
+  const canSubmit = trimmed.length > 0 && !categories.includes(trimmed);
+
+  const handleSubmit = () => {
+    if (!canSubmit) return;
+    onSave([...categories, trimmed]);
+  };
+
+  return (
+    <div className={`bm-panel-root${open ? ' is-open' : ''}`} aria-hidden={!open}>
+      <div className="bm-panel-backdrop" onClick={onClose} />
+      <aside className="bm-panel" role="dialog" aria-modal="true" aria-label="카테고리 추가">
+        <header className="bm-panel-head">
+          <h2 className="bm-panel-title">카테고리 추가</h2>
+          <button type="button" className="bm-panel-close" onClick={onClose} aria-label="닫기">
+            <CloseIcon size={20} />
+          </button>
+        </header>
+
+        <div className="bm-panel-body">
+          <div className="bm-field">
+            <label className="bm-field-label">게시 위치</label>
+            <div className="bm-radio-group" role="radiogroup">
+              {LOCATIONS.map((loc) => (
+                <Radio
+                  key={loc}
+                  checked={location === loc}
+                  label={loc}
+                  onChange={() => setLocation(loc)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="bm-field">
+            <label className="bm-field-label" htmlFor="bm-cat-name">카테고리명</label>
+            <input
+              id="bm-cat-name"
+              type="text"
+              className="bm-input"
+              placeholder="카테고리명을 입력해 주세요"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleSubmit();
+                }
+              }}
+            />
+          </div>
+        </div>
+
+        <footer className="bm-panel-foot">
+          <button type="button" className="bm-btn bm-btn-outline" onClick={onClose}>
+            취소
+          </button>
+          <button
+            type="button"
+            className="bm-btn bm-btn-primary"
+            disabled={!canSubmit}
+            onClick={handleSubmit}
+          >
+            저장
+          </button>
+        </footer>
+      </aside>
     </div>
   );
 }
@@ -802,19 +1127,36 @@ function defaultHistory(post: Post): HistoryEvent[] {
 interface DetailPanelProps {
   post: Post | null;
   open: boolean;
+  categories: readonly string[];
   onClose: () => void;
+  onSave?: () => void;
 }
 
-function DetailPanel({ post, open, onClose }: DetailPanelProps) {
+function DetailPanel({ post, open, categories, onClose, onSave }: DetailPanelProps) {
   const [tab, setTab] = useState<'info' | 'history'>('info');
-  const [memo, setMemo] = useState('');
+  const [syncing, setSyncing] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
-    if (open) {
+    if (open && post) {
       setTab('info');
-      setMemo('');
+      setSyncing(false);
+      setTitle(post.title);
+      setCategory(post.category);
+      const meta = getPostMeta(post.id);
+      setDescription(meta.description);
+      setTags([...meta.tags]);
     }
   }, [open, post?.id]);
+
+  const handleSync = () => {
+    if (syncing) return;
+    setSyncing(true);
+    window.setTimeout(() => setSyncing(false), 400);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -857,97 +1199,136 @@ function DetailPanel({ post, open, onClose }: DetailPanelProps) {
           </button>
         </header>
 
-        {post && tab === 'info' && (
-          <div className="bm-detail-body">
-            <section className="bm-detail-section">
-              <div className="bm-detail-row bm-detail-row-stack">
-                <span className="bm-detail-label">제목</span>
-                <span className="bm-detail-value bm-detail-value-strong">{post.title}</span>
-              </div>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">노션 링크</span>
-                <a className="bm-detail-link" href="#" onClick={(e) => e.preventDefault()}>
-                  notion.so/page/{post.id}
-                  <span aria-hidden>›</span>
-                </a>
-              </div>
-            </section>
-
-            <section className="bm-detail-section">
-              <h3 className="bm-detail-section-title">게시 정보</h3>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">게시 위치</span>
-                <span className="bm-detail-value">
-                  <span className={`bm-loc bm-loc-${post.location === 'B2B' ? 'b2b' : 'platform'}`}>{post.location}</span>
-                </span>
-              </div>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">카테고리</span>
-                <span className="bm-detail-value">{post.category}</span>
-              </div>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">발행 상태</span>
-                <span className="bm-detail-value">
-                  <span className={`bm-tag bm-tag-${STATUS_TONE[post.status]}`}>{post.status}</span>
-                </span>
-              </div>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">상단 고정</span>
-                <span className="bm-detail-value bm-detail-value-flex">
-                  <PinnedMark on={!!post.pinned} />
-                  <span>{post.pinned ? '예' : '아니오'}</span>
-                </span>
-              </div>
-            </section>
-
-            <section className="bm-detail-section">
-              <h3 className="bm-detail-section-title">작성 정보</h3>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">작성자</span>
-                <span className="bm-detail-value">{post.author}</span>
-              </div>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">게시일</span>
-                <span className="bm-detail-value">{post.publishedAt}</span>
-              </div>
-              <div className="bm-detail-row">
-                <span className="bm-detail-label">최종 수정일</span>
-                <span className="bm-detail-value">{post.updatedAt}</span>
-              </div>
-            </section>
-
-            <section className="bm-detail-section">
-              <h3 className="bm-detail-section-title">성과</h3>
-              <div className="bm-detail-stats">
-                <div className="bm-stat">
-                  <span className="bm-stat-label">조회수</span>
-                  <span className="bm-stat-value">{post.views.toLocaleString()}</span>
+        {post && tab === 'info' && (() => {
+          const cumulativeViews = post.views * 3 + 524;
+          return (
+            <div className="bm-detail-body">
+              <section className="bm-detail-section">
+                <div className="bm-detail-row bm-detail-row-stack">
+                  <span className="bm-detail-label">제목</span>
+                  <input
+                    type="text"
+                    className="bm-input"
+                    placeholder="제목을 입력해 주세요"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
                 </div>
-                <div className="bm-stat">
-                  <span className="bm-stat-label">좋아요</span>
-                  <span className="bm-stat-value">{post.likes.toLocaleString()}</span>
+                <div className="bm-detail-row bm-detail-row-stack">
+                  <span className="bm-detail-label">설명</span>
+                  <div className="bm-detail-value-stack">
+                    <textarea
+                      className="bm-textarea bm-textarea-sm"
+                      placeholder="설명을 입력해 주세요"
+                      value={description}
+                      maxLength={DESCRIPTION_MAX}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <div className="bm-textarea-counter">({description.length}/{DESCRIPTION_MAX})</div>
+                  </div>
                 </div>
-                <div className="bm-stat">
-                  <span className="bm-stat-label">댓글</span>
-                  <span className="bm-stat-value">{post.comments.toLocaleString()}</span>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">링크</span>
+                  <a
+                    className="bm-url-link"
+                    href={post.url}
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    {post.url}
+                  </a>
                 </div>
-              </div>
-            </section>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">노션 링크</span>
+                  <div className="bm-detail-notion-row">
+                    <a className="bm-detail-link" href="#" onClick={(e) => e.preventDefault()}>
+                      notion.so/page/{post.id}
+                      <span aria-hidden>›</span>
+                    </a>
+                    <button
+                      type="button"
+                      className="bm-btn bm-btn-outline bm-btn-sync-sm"
+                      disabled={syncing}
+                      onClick={handleSync}
+                    >
+                      {syncing ? '동기화 중…' : '동기화'}
+                    </button>
+                  </div>
+                </div>
+              </section>
 
-            <section className="bm-detail-section">
-              <h3 className="bm-detail-section-title">비고</h3>
-              <textarea
-                className="bm-textarea"
-                placeholder="메모 사항을 입력해 주세요"
-                value={memo}
-                maxLength={100}
-                onChange={(e) => setMemo(e.target.value)}
-                rows={4}
-              />
-              <div className="bm-textarea-counter">({memo.length}/100)</div>
-            </section>
-          </div>
-        )}
+              <section className="bm-detail-section">
+                <h3 className="bm-detail-section-title">게시 정보</h3>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">게시 위치</span>
+                  <span className="bm-detail-value">
+                    <span className={`bm-loc bm-loc-${post.location === 'B2B' ? 'b2b' : 'platform'}`}>{post.location}</span>
+                  </span>
+                </div>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">카테고리</span>
+                  <div className="bm-select bm-select-block">
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      {categories.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                    <span className="bm-select-caret" aria-hidden="true"><ChevronDown size={16} /></span>
+                  </div>
+                </div>
+                <div className="bm-detail-row bm-detail-row-stack">
+                  <span className="bm-detail-label">태그</span>
+                  <TagInput value={tags} onChange={setTags} />
+                </div>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">발행 상태</span>
+                  <span className="bm-detail-value">
+                    <span className={`bm-tag bm-tag-${STATUS_TONE[post.status]}`}>{post.status}</span>
+                  </span>
+                </div>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">상단 고정</span>
+                  <span className="bm-detail-value bm-detail-value-flex">
+                    <PinnedMark on={!!post.pinned} />
+                    <span>{post.pinned ? '예' : '아니오'}</span>
+                  </span>
+                </div>
+              </section>
+
+              <section className="bm-detail-section">
+                <h3 className="bm-detail-section-title">작성 정보</h3>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">작성자</span>
+                  <span className="bm-detail-value">{post.author}</span>
+                </div>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">게시일</span>
+                  <span className="bm-detail-value">{post.publishedAt}</span>
+                </div>
+                <div className="bm-detail-row">
+                  <span className="bm-detail-label">최종 수정일</span>
+                  <span className="bm-detail-value">{post.updatedAt}</span>
+                </div>
+              </section>
+
+              <section className="bm-detail-section">
+                <h3 className="bm-detail-section-title">성과</h3>
+                <div className="bm-stat-rows">
+                  <div className="bm-stat-row">
+                    <span className="bm-stat-row-label">기간 조회수</span>
+                    <span className="bm-stat-row-value">{post.views.toLocaleString()}회</span>
+                  </div>
+                  <div className="bm-stat-row">
+                    <span className="bm-stat-row-label">누적 조회수</span>
+                    <span className="bm-stat-row-value">{cumulativeViews.toLocaleString()}회</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+          );
+        })()}
 
         {post && tab === 'history' && (
           <div className="bm-detail-body bm-detail-body-history">
@@ -972,6 +1353,22 @@ function DetailPanel({ post, open, onClose }: DetailPanelProps) {
               <div className="bm-detail-empty">기록된 변경 내역이 없습니다.</div>
             )}
           </div>
+        )}
+
+        {post && (
+          <footer className="bm-panel-foot">
+            <button
+              type="button"
+              className="bm-btn bm-btn-primary"
+              disabled={title.trim().length === 0}
+              onClick={() => {
+                onSave?.();
+                onClose();
+              }}
+            >
+              수정
+            </button>
+          </footer>
         )}
       </aside>
     </div>

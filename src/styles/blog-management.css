@@ -332,6 +332,107 @@ body:has(.bm-screen) {
   text-decoration: underline dotted;
 }
 
+/* ---------- Radio ---------- */
+.bm-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  user-select: none;
+  cursor: pointer;
+  color: var(--bm-gray-700);
+}
+
+.bm-radio input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.bm-radio-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--bm-gray-300);
+  background: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  transition: border-color .12s ease, background .12s ease;
+}
+
+.bm-radio.is-checked .bm-radio-dot {
+  border-color: var(--bm-orange-400);
+}
+
+.bm-radio.is-checked .bm-radio-dot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bm-orange-400);
+}
+
+.bm-radio:hover .bm-radio-dot {
+  border-color: var(--bm-orange-400);
+}
+
+.bm-radio-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--bm-gray-700);
+}
+
+.bm-filter-radio-divider {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background: var(--bm-gray-200);
+  margin: 0 8px;
+}
+
+/* ---------- Period segmented buttons (성과 조회 기간 빠른 선택) ---------- */
+.bm-period-group {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--bm-gray-200);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 4px;
+}
+
+.bm-period-btn {
+  padding: 10px 16px;
+  background: #FFFFFF;
+  border: 0;
+  border-right: 1px solid var(--bm-gray-200);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bm-gray-700);
+  line-height: 20px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+
+.bm-period-btn:last-child {
+  border-right: 0;
+}
+
+.bm-period-btn:hover:not(.is-active) {
+  background: var(--bm-gray-50);
+}
+
+.bm-period-btn.is-active {
+  background: var(--bm-gray-50);
+  color: var(--bm-gray-800);
+}
+
 /* ---------- Select ---------- */
 .bm-select {
   position: relative;
@@ -481,7 +582,7 @@ body:has(.bm-screen) {
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
-  min-width: 1280px;
+  min-width: 1480px;
 }
 
 .bm-table thead th {
@@ -506,14 +607,15 @@ body:has(.bm-screen) {
 }
 
 .bm-table .bm-th-title { width: auto; }
-.bm-table th:nth-child(2) { width: 96px; }
-.bm-table th:nth-child(3) { width: 140px; }
-.bm-table th:nth-child(4) { width: 96px; }
-.bm-table th:nth-child(5) { width: 100px; }
-.bm-table th:nth-child(6) { width: 120px; } /* 상단 고정 유무 */
-.bm-table th:nth-child(7) { width: 100px; }
-.bm-table th:nth-child(8) { width: 110px; }
+.bm-table th:nth-child(2) { width: 220px; } /* URL */
+.bm-table th:nth-child(3) { width: 96px; }
+.bm-table th:nth-child(4) { width: 140px; }
+.bm-table th:nth-child(5) { width: 96px; }
+.bm-table th:nth-child(6) { width: 100px; }
+.bm-table th:nth-child(7) { width: 120px; } /* 상단 고정 유무 */
+.bm-table th:nth-child(8) { width: 100px; }
 .bm-table th:nth-child(9) { width: 110px; }
+.bm-table th:nth-child(10) { width: 110px; }
 
 .bm-th-num {
   text-align: right !important;
@@ -606,6 +708,27 @@ body:has(.bm-screen) {
   text-align: right;
   font-variant-numeric: tabular-nums;
   color: var(--bm-gray-700);
+}
+
+.bm-td-url {
+  max-width: 0;
+}
+
+.bm-url-link {
+  display: inline-block;
+  max-width: 100%;
+  color: #1A6FE0;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.bm-url-link:hover {
+  text-decoration: underline;
 }
 
 .bm-td-action {
@@ -911,6 +1034,10 @@ body:has(.bm-screen) {
   line-height: 22px;
 }
 
+.bm-textarea-sm {
+  min-height: 64px;
+}
+
 .bm-input::placeholder,
 .bm-textarea::placeholder {
   color: var(--bm-gray-400);
@@ -931,6 +1058,87 @@ body:has(.bm-screen) {
 .bm-select-block select {
   width: 100%;
   height: 40px;
+}
+
+.bm-textarea-counter {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--bm-gray-600);
+  line-height: 20px;
+}
+
+/* Tag input (figma-inspired chip input) */
+.bm-tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 6px 10px;
+  background: #FFFFFF;
+  border: 1px solid var(--bm-gray-300);
+  border-radius: 8px;
+  box-shadow: var(--bm-shadow-xs);
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+
+.bm-tag-input:focus-within {
+  border-color: var(--bm-orange-400);
+  box-shadow: var(--bm-shadow-focus);
+}
+
+.bm-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px 2px 10px;
+  background: var(--bm-gray-100);
+  color: var(--bm-gray-700);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  border-radius: 13px;
+}
+
+.bm-tag-chip-text {
+  white-space: nowrap;
+}
+
+.bm-tag-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  background: transparent;
+  color: var(--bm-gray-500);
+  border-radius: 999px;
+  cursor: pointer;
+  flex: none;
+}
+
+.bm-tag-chip-remove:hover {
+  background: var(--bm-gray-200);
+  color: var(--bm-gray-800);
+}
+
+.bm-tag-input-field {
+  flex: 1;
+  min-width: 120px;
+  border: 0;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--bm-gray-800);
+  padding: 4px 0;
+}
+
+.bm-tag-input-field::placeholder {
+  color: var(--bm-gray-400);
 }
 
 /* Notion link row (input + 동기화 button) */
@@ -1123,6 +1331,92 @@ body:has(.bm-screen) {
   color: var(--bm-orange-500);
 }
 
+/* Infobox (admin design system 2917:10433) */
+.bm-infobox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--bm-gray-50);
+  border-radius: 8px;
+}
+
+.bm-infobox-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--bm-gray-500);
+}
+
+.bm-infobox-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--bm-gray-600);
+}
+
+.bm-infobox-text strong {
+  font-weight: 600;
+  color: var(--bm-gray-700);
+}
+
+/* Readonly form fields (admin design system 369:124577) */
+.bm-readonly-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px 0 4px;
+  border-top: 1px solid var(--bm-gray-200);
+}
+
+.bm-readonly-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.bm-readonly-label {
+  flex: none;
+  width: 120px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--bm-gray-600);
+}
+
+.bm-readonly-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--bm-gray-700);
+  word-break: break-word;
+}
+
+.bm-readonly-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bm-tag-readonly {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: var(--bm-gray-100);
+  color: var(--bm-gray-400);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  border-radius: 13px;
+}
+
 /* Segmented radio (게시 위치) */
 .bm-segment {
   display: inline-flex;
@@ -1205,6 +1499,13 @@ body:has(.bm-screen) {
   font-size: 12px;
   color: var(--bm-gray-500);
   line-height: 18px;
+}
+
+/* ---------- Category panel ---------- */
+.bm-radio-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
 }
 
 /* ---------- Detail panel (info / history tabs) ---------- */
@@ -1317,6 +1618,13 @@ body:has(.bm-screen) {
   gap: 8px;
 }
 
+.bm-detail-value-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
 .bm-detail-link {
   font-size: 14px;
   color: var(--bm-orange-500);
@@ -1346,6 +1654,59 @@ body:has(.bm-screen) {
   background: var(--bm-gray-50);
 }
 
+.bm-detail-notion-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bm-detail-notion-row .bm-detail-link {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bm-btn-sync-sm {
+  flex: none;
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.bm-stat-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bm-stat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.bm-stat-row-label {
+  flex: none;
+  width: 120px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--bm-gray-600);
+}
+
+.bm-stat-row-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--bm-gray-700);
+  font-variant-numeric: tabular-nums;
+}
+
 .bm-stat {
   display: flex;
   flex-direction: column;
@@ -1368,13 +1729,6 @@ body:has(.bm-screen) {
   color: var(--bm-gray-800);
   line-height: 26px;
   font-variant-numeric: tabular-nums;
-}
-
-.bm-textarea-counter {
-  text-align: right;
-  font-size: 12px;
-  color: var(--bm-gray-400);
-  margin-top: 4px;
 }
 
 .bm-detail-empty {
